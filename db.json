@@ -1,0 +1,147 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Doctors Appointment",
+      "day": "May 5th at 2:30pm",
+      "reminder": true
+    },
+    {
+      "id": 2,
+      "text": "Meeting at School",
+      "day": "May 6th at 2:30pm",
+      "reminder": true
+    },
+    {
+      "id": 3,
+      "text": "Food Shopping",
+      "day": "May 7th at 12:30pm",
+      "reminder": false
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "jamesliu_8@yahoo.com",
+      "password": "123456",
+      "firstName": "James",
+      "lastName": "Liu",
+      "token": "1"
+    },
+    {
+      "id": 2,
+      "email": "alanliu@yahoo.com",
+      "password": "123456",
+      "firstName": "Alan",
+      "lastName": "Liu",
+      "token": "2"
+    },
+    {
+      "id": 3,
+      "email": "test1@gmail.com",
+      "password": "123",
+      "firstName": "test1",
+      "lastName": "test11",
+      "token": ""
+    },
+    {
+      "id": 4,
+      "email": "test2@gmail.com",
+      "password": "123",
+      "firstName": "test2",
+      "lastName": "test22",
+      "token": ""
+    },
+    {
+      "id": 5,
+      "email": "test3@gmail.com",
+      "password": "123",
+      "firstName": "test3",
+      "lastName": "test3",
+      "token": ""
+    },
+    {
+      "id": 6,
+      "email": "test5@gmail.com",
+      "password": "123",
+      "firstName": "test5",
+      "lastName": "test5",
+      "token": ""
+    },
+    {
+      "id": 7,
+      "email": "test6@gmail.com",
+      "password": "123",
+      "firstName": "test6",
+      "lastName": "test6",
+      "token": ""
+    },
+    {
+      "id": 8,
+      "email": "test7@gmail.com",
+      "password": "123",
+      "firstName": "test7@gmail.com",
+      "lastName": "test7@gmail.com",
+      "token": ""
+    },
+    {
+      "id": 9,
+      "email": "test8@gmail.com",
+      "password": "123",
+      "firstName": "test8",
+      "lastName": "test8",
+      "token": ""
+    },
+    {
+      "id": 10,
+      "email": "test9@gmail.com",
+      "password": "123",
+      "firstName": "test9",
+      "lastName": "test9",
+      "token": ""
+    },
+    {
+      "id": 11,
+      "email": "test10@gmail.com",
+      "password": "123",
+      "firstName": "test10",
+      "lastName": "test10",
+      "token": ""
+    },
+    {
+      "id": 12,
+      "email": "test11@gmail.com",
+      "password": "123",
+      "firstName": "test11",
+      "lastName": "test11",
+      "token": ""
+    }
+  ],
+  "books": [
+    {
+      "name": "clean code",
+      "author": "robert c martin",
+      "image": "https://images-na.ssl-images-amazon.com/images/I/41zoxjP9lcL._SX323_BO1,204,203,200_.jpg",
+      "amount": 700
+    },
+    {
+      "name": "pragmatic programmer",
+      "author": "david thomas",
+      "image": "https://m.media-amazon.com/images/I/518FqJvR9aL.jpg",
+      "amount": 800
+    },
+    {
+      "name": "Art of Computer Programming",
+      "author": "Donald John Fuller",
+      "image": "https://images-na.ssl-images-amazon.com/images/I/41gCSRxxVeL._SY429_BO1,204,203,200_.jpg",
+      "amount": 18300
+    },
+    {
+      "name": "Introduction to Algorithms",
+      "author": "T Cormen",
+      "image": "https://images-na.ssl-images-amazon.com/images/I/41VndKVtiXL._SX442_BO1,204,203,200_.jpg",
+      "amount": 1500
+    }
+  ],
+  "cart": []
+}
