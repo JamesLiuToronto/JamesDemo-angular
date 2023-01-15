@@ -1,0 +1,10 @@
+
+<div *ngIf="isShowingCart" class="flex-col min-h-[100px] rounded-lg bg-white p-6 dark:bg-night-700 mx-4">
+    <div class="text-base font-semibold text-gray-800 dark:text-night-50" >
+        Total books in Cart: {{getBooksInCart().size}}</div>
+    <div *ngIf="getBooksInCart().size > 0">
+        <div *ngFor=" let name of getBooksInCart().keys()  let i = index ">
+            <small class="font-normal text-gray-400 dark:text-night-300">{{i+1}}. {{name}} </small>
+        </div>
+    </div>
+</div>

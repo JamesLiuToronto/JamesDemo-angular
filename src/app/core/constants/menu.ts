@@ -8,9 +8,15 @@ export class Menu {
       items: [
         {
           icon: 'assets/icons/outline/chart-pie.svg',
-          label: 'My Dashboard',
+          label: 'Dashboard',
           route: '/dashboard',
           children: [{ label: 'Nfts', route: '/dashboard/nfts' }],
+        },
+        {
+          icon: 'assets/icons/outline/chart-pie.svg',
+          label: 'My Dashboard',
+          route: '/mydashboard',
+          children: [{ label: 'My Dashboard', route: '/mydashboard/my-dash' }],
         },
         {
           icon: 'assets/icons/outline/lock-closed.svg',
