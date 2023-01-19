@@ -23,7 +23,7 @@ export class DashheaderComponent implements OnInit{
 
  changeShowBookFlag(){
     this.isShowingBook = !this.isShowingBook ;
-    this.booksService.showBookChangedEvent.emit(this.isShowingBook) ;
+    this.booksService.changeShowBookFlag(this.isShowingBook) ;
  }
 
  changeShowCartFlag(){

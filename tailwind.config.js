@@ -81,8 +81,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      poppins: ['Poppins', 'system-ui', 'sans-serif'],
-      nunito: ['Nunito Sans', 'sans-serif'],
+      poppins: ['Segoe UI', 'Poppins', 'system-ui', 'sans-serif'],
+      nunito: ['Segoe UI', 'Nunito Sans', 'sans-serif'],
     },
     fontSize: {
       xs: '0.7rem',

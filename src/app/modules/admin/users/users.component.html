@@ -1,7 +1,9 @@
+
+
 <div class="mx-auto px-4 py-4 sm:px-8 lg:container">
 
     <!-- Auctions Table -->
-    <div nft-auctions-table class="md:col-span-2 xl:col-span-3">
+    <div nft-auctions-table class="sm:col-span-1 md:col-span-2 xl:col-span-3">
 
         <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
             <div class="mb-4 flex items-center justify-between">
@@ -16,10 +18,10 @@
                 </button>
             </div>
 
-            <div class="relative overflow-x-auto">
+            <div class="overflow-x-auto">
                 <table class="w-full table-auto">
                     <!--Table head-->
-                    <thead class="text-xs uppercase text-gray-400 dark:text-night-300">
+                    <thead class="text-xs uppercase text-gray-400 dark:text-night-100">
                         <tr>
                             <th class="py-3 text-left"> Email</th>
                             <th class="py-3 text-left">First Name</th>
@@ -32,13 +34,13 @@
                     <!--Table body-->
                     <tbody>
                         <tr *ngFor="let user of users"
-                            class="border-b border-dashed border-gray-200 hover:bg-gray-100 dark:border-night-500 dark:hover:bg-night-600">
+                            class="border-b border-dashed border-gray-200 dark:border-night-500 hover:bg-slate-200">
 
-                            <td class="px-1 py-2 whitespace-nowrap text-sm font-medium text-gray-900">{{
+                            <td class="px-1 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-night-100">{{
                                 user.email }} </td>
-                            <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap">{{
+                            <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">{{
                                 user.firstName }}</td>
-                            <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap">{{
+                            <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">{{
                                 user.lastName}} </td>
                                 <td class="py-2 pl-2 text-right">
                                     <div class="flex justify-end">

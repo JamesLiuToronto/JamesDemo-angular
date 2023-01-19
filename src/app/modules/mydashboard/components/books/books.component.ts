@@ -17,7 +17,7 @@ export class BooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.books = this.booksService.getBooks() ;
-    this.booksService.showBookChangedEvent
+    this.booksService._showBookChangedEvent
       .subscribe(
         (flag: boolean) => {
           this.isShowingBook = flag ;

@@ -1,13 +1,17 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BooksService {
 
-  showBookChangedEvent = new EventEmitter<boolean>();
+  _showBookChangedEvent = new Subject<boolean>();
   constructor() { 
-    
+  }
+
+  changeShowBookFlag(flag:boolean){
+    this._showBookChangedEvent.next(flag) ;
   }
   
   getBooks() {

@@ -4,7 +4,7 @@
         Total books in Cart: {{getBooksInCart().size}}</div>
     <div *ngIf="getBooksInCart().size > 0">
         <div *ngFor=" let name of getBooksInCart().keys()  let i = index ">
-            <small class="font-normal text-gray-400 dark:text-night-300">{{i+1}}. {{name}} </small>
+            <small class="font-normal text-gray-600 dark:text-night-300">{{i+1}}. {{name}} </small>
         </div>
     </div>
 </div>
