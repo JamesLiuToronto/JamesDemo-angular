@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
 import { TwoStepsComponent } from './pages/two-steps/two-steps.component';
 import { UsersComponent } from './pages/users/users.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,6 @@ import { UsersComponent } from './pages/users/users.component';
     TwoStepsComponent,
     UsersComponent,
   ],
-  imports: [CommonModule, AuthRoutingModule, HttpClientModule, AngularSvgIconModule.forRoot()],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, HttpClientModule, AngularSvgIconModule.forRoot()],
 })
 export class AuthModule {}

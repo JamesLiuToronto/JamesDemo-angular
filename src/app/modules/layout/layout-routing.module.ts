@@ -1,23 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: LayoutComponent,
-    loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardModule),
+    loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardModule), 
   },
   {
     path: 'mydashboard',
     component: LayoutComponent,
-    loadChildren: () => import('../mydashboard/mydashboard.module').then((m) => m.MydashboardModule),
+    loadChildren: () => import('../mydashboard/mydashboard.module').then((m) => m.MydashboardModule),  canActivate: [AuthGuard]
   },
   {
     path: 'admin',
     component: LayoutComponent,
-    loadChildren: () => import('../admin/admin.module').then((m) => m.AdminModule),
+    loadChildren: () => import('../admin/admin.module').then((m) => m.AdminModule),  canActivate: [AuthGuard]
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'error/404' },
