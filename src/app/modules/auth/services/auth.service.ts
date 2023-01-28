@@ -1,101 +1,76 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable} from 'rxjs';
-import { LoginForm, RegisterForm } from '../model/Auth';
-import { User } from '../../admin/model/User';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { LoginForm, LoginResult} from '../model/Auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  isAuthenticated: boolean = false;
-  
-  private userSubject: BehaviorSubject<User[]>;
-  public user: Observable<User[]>;
-  user1: User | undefined;
+  loginErrorMessage: string = "Login failed, email password not match";
+  loginAccount: LoginResult | undefined;
   errorMsg: string | undefined;
-  private nextUserId: number = 0;
 
-  userChangeEmitter = new EventEmitter() ;
+  constructor(private http: HttpClient) {
 
-  constructor( private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User[]>(JSON.parse(localStorage.getItem('user') || '{}'));
-    this.user = this.userSubject.asObservable();
-  }
- 
-  private baseUrl:string = "http://localhost:3000/users" ;
-
-  raiseChangeUserEmitter(data :boolean){
-    this.userChangeEmitter.emit(data) ;
   }
 
 
-  login(form: LoginForm) {
+  login(form: LoginForm): boolean {
 
-    let url:string = this.baseUrl + "?email=" + form.email + "&&password=" + form.password;
+    let url: string = "http://localhost:9091/login";
+    //let url: string = "http://localhost:4200/api/signin";
     console.log("url= " + url);
-    return this.http.get<User[]>(url);
-  }
-  
-  getUsersHttp() {
-    console.log("url= " + this.baseUrl);
-    this.user = this.http.get<User[]>(this.baseUrl);
-    return this.user ;
-  }
-  
-    
-  register(form: RegisterForm) { 
-   
-    
-    const headers = { 'content-type': 'application/json'}  ;
-    const inputUser = this.mapUser(form) ;
-    console.log("form", form) ;
-    const body=JSON.stringify(inputUser);
-    console.log("body=" + body)
-    return this.http.post(this.baseUrl, body, { headers: headers }) ;
- 
-  } ;
-
-  setNextUserId(id:number){
-    this.nextUserId = id ;
-  }
-  getNextUserId(){
-    return this.nextUserId ;
-  }
-
-  mapUser(form: RegisterForm) {
-    const inputUser: User = {
-      id: 0 ,
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      token: ''
-    } ;
-    inputUser.id = this.nextUserId;
-    inputUser.email = form.email ;
-    inputUser.firstName = form.firstName ;
-    inputUser.lastName = form.lastName ;
-    inputUser.password = form.password ;
-    return inputUser ;
-
-
+    console.log("form.email= " + form.email);
+    let params = new HttpParams().
+        append('username', form.email).
+        append('password', form.password);
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set("Content-Type", "application/x-www-form-urlencoded");
+    this.http.post<LoginResult>(url,{ headers: headers }, { params: params }).
+      subscribe(u => {
+        this.loginAccount = u;
+        
+        if (this.loginAccount != undefined){
+          localStorage.setItem('userId', this.loginAccount.userId.toString());
+          localStorage.setItem('token', this.loginAccount.token);
+          localStorage.setItem('account', encodeURI(JSON.stringify(this.loginAccount.account)));
+          console.log("userid=" + localStorage.getItem('userId'));
+          this.enableAuthenticated();
+          return true;
+        }
+        console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
+        return false;
+        
+      }, (error) => {
+        this.loginErrorHandler(error)
+        console.log("error happened")
+        return false;
+      });
+    return false;
   }
 
+  private loginErrorHandler(error: any) {
+    alert("login failed" + error.message);
+    console.log("catch error =" + error.errorMessage);
+  }
 
   enableAuthenticated() {
-    this.isAuthenticated = true;
+    localStorage.setItem('isAuthenticated', 'true');
   }
 
   disableAuthenticated() {
-    this.isAuthenticated = false;
+    localStorage.setItem('isAuthenticated', 'false');
   }
+  isAuthenticated(){
+    return localStorage.getItem('isAuthenticated');
+  }
+  
 
   logout() {
     this.disableAuthenticated();
-
-    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
 
   }
 

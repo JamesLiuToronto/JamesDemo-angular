@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
-import { HttpClientModule } from '@angular/common/http';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DownloadComponent } from './download/download.component';
@@ -16,6 +15,6 @@ import { UsersComponent } from './users/users.component';
     UsersComponent,
     
   ],
-  imports: [CommonModule, AdminRoutingModule, HttpClientModule, AngularSvgIconModule.forRoot()],
+  imports: [CommonModule, AdminRoutingModule, AngularSvgIconModule.forRoot()],
 })
 export class AdminModule {}

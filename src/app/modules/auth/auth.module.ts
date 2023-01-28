@@ -5,7 +5,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
@@ -23,6 +22,6 @@ import { FormsModule } from '@angular/forms';
     TwoStepsComponent,
     UsersComponent,
   ],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, HttpClientModule, AngularSvgIconModule.forRoot()],
+  imports: [CommonModule, FormsModule, AuthRoutingModule, AngularSvgIconModule.forRoot()],
 })
 export class AuthModule {}

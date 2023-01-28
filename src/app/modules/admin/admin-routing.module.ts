@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'download', component: DownloadComponent, data: { returnUrl: window.location.pathname } },
       { path: 'roles', component: RolesComponent },
-      { path: 'users', component: UsersComponent },
+      { path: 'users', component: UsersComponent,},
     ],
   },
 ];

@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../model/User';
+import { delay } from 'rxjs';
 
 
 @Injectable({
@@ -28,7 +29,7 @@ export class UsersService {
 
   getUsers() {
     console.log("url= " + this.baseUrl);
-    return this.http.get<User[]>(this.baseUrl);
+    return this.http.get<User[]>(this.baseUrl).pipe(delay(500));
   }
   
   setNextUserId(id:number){
@@ -37,7 +38,6 @@ export class UsersService {
   getNextUserId(){
     return this.nextUserId ;
   }
-
 
 
 }

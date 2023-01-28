@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -33,6 +32,6 @@ import { LayoutComponent } from './layout.component';
     NavbarMobileMenuComponent,
     NavbarMobileSubmenuComponent,
   ],
-  imports: [CommonModule, LayoutRoutingModule, HttpClientModule, AngularSvgIconModule.forRoot(), SharedModule],
+  imports: [CommonModule, LayoutRoutingModule, AngularSvgIconModule.forRoot(), SharedModule],
 })
 export class LayoutModule {}
