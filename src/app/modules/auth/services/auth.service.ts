@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginForm, LoginResult} from '../model/Auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,28 @@ import { LoginForm, LoginResult} from '../model/Auth';
 export class AuthService {
 
   loginErrorMessage: string = "Login failed, email password not match";
-  loginAccount: LoginResult | undefined;
   errorMsg: string | undefined;
+  result: boolean = false ;
 
   constructor(private http: HttpClient) {
 
   }
 
+  login(form: LoginForm) : Observable<LoginResult>{
+    let url: string = "http://localhost:9091/login";
+    //let url: string = "http://localhost:4200/api/signin";
+    console.log("url= " + url);
+    console.log("form.email= " + form.email);
+    let params = new HttpParams().
+        append('username', form.email).
+        append('password', form.password);
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set("Content-Type", "application/x-www-form-urlencoded");
+    return this.http.post<LoginResult>(url,{ headers: headers }, { params: params });
+  }
 
+/*
   login(form: LoginForm): boolean {
 
     let url: string = "http://localhost:9091/login";
@@ -38,23 +53,26 @@ export class AuthService {
           localStorage.setItem('account', encodeURI(JSON.stringify(this.loginAccount.account)));
           console.log("userid=" + localStorage.getItem('userId'));
           this.enableAuthenticated();
-          return true;
+          console.log("before return true") ;
+          this.result = true ;
+         
+        } else {
+          console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
+          this.result = false ;
         }
-        console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
-        return false;
         
       }, (error) => {
         this.loginErrorHandler(error)
         console.log("error happened")
-        return false;
+        this.result = false ;;
       });
-    return false;
-  }
+      console.log("service return=" + this.result) ;
+      return this.result ;
 
-  private loginErrorHandler(error: any) {
-    alert("login failed" + error.message);
-    console.log("catch error =" + error.errorMessage);
   }
+  */
+
+  
 
   enableAuthenticated() {
     localStorage.setItem('isAuthenticated', 'true');
@@ -64,13 +82,14 @@ export class AuthService {
     localStorage.setItem('isAuthenticated', 'false');
   }
   isAuthenticated(){
-    return localStorage.getItem('isAuthenticated');
+    return localStorage.getItem('isAuthenticated')== "true";
   }
   
 
-  logout() {
+  logoutService() {
     this.disableAuthenticated();
     localStorage.removeItem('userId');
+    console.log("logout= " + this.isAuthenticated) ;
 
   }
 
