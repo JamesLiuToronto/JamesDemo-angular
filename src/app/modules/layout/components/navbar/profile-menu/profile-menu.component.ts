@@ -23,4 +23,8 @@ export class ProfileMenuComponent implements OnInit {
     console.log("call logout service=" + this.authService.isAuthenticated())
     this.router.navigateByUrl('/auth/sing-in');
   }
+
+  isAuthenticated(){
+    return this.authService.isAuthenticated() ;
+  }
 }

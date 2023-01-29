@@ -1,6 +1,8 @@
 <div class="flex h-screen w-full overflow-hidden">
   <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
+  <div *ngIf="authService.isAuthenticated()">
+    <app-sidebar></app-sidebar>
+  </div>
 
   <div class="grid flex-grow content-start bg-gray-100 dark:bg-night-800">
     <!-- Header -->

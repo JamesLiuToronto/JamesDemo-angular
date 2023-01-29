@@ -10,7 +10,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
 import { TwoStepsComponent } from './pages/two-steps/two-steps.component';
 import { UsersComponent } from './pages/users/users.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,6 @@ import { FormsModule } from '@angular/forms';
     TwoStepsComponent,
     UsersComponent,
   ],
-  imports: [CommonModule, FormsModule, AuthRoutingModule, AngularSvgIconModule.forRoot()],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,  AuthRoutingModule, AngularSvgIconModule.forRoot()],
 })
 export class AuthModule {}

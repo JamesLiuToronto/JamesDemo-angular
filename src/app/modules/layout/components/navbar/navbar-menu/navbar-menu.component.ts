@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MenuItem } from 'src/app/core/models/menu.model';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { MenuService } from '../../../services/menu.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class NavbarMenuComponent implements OnInit {
   private showMenuClass = ['scale-100', 'animate-fade-in-up', 'opacity-100', 'pointer-events-auto'];
   private hideMenuClass = ['scale-95', 'animate-fade-out-down', 'opacity-0', 'pointer-events-none'];
 
-  constructor(private menuService: MenuService) {
+  constructor(private menuService: MenuService, private authService:AuthService) {
     this.pagesMenu$ = this.menuService.pagesMenu$;
   }
 
@@ -39,4 +40,9 @@ export class NavbarMenuComponent implements OnInit {
       this.hideMenuClass.forEach((c) => element.classList.add(c));
     }
   }
+
+  isAuthenticated(){
+    return this.authService.isAuthenticated() ;
+  }
+
 }

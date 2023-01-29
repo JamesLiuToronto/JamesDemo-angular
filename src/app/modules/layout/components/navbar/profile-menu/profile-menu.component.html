@@ -1,4 +1,11 @@
-<div class="relative ml-3">
+
+<div *ngIf="!isAuthenticated()">
+  <a routerLink="/auth/sign-in" class="text-sm font-semibold text-primary-600 hover:text-primary-400 ml-3">Login</a>
+  <a routerLink="/auth/sign-up" class="text-sm font-semibold text-primary-600 hover:text-primary-400 ml-3">Sing up</a>
+</div>
+
+
+<div class="relative ml-3" *ngIf="isAuthenticated()">
   <!-- Profile Button -->
   <button
     (click)="toggleMenu()"
