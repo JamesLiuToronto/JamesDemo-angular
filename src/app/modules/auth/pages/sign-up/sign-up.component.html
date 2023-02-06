@@ -1,4 +1,4 @@
-<form [formGroup]="registerationForm" class="my-3 space-y-3">
+<form [formGroup]="registerationForm" (ngSubmit)="onSubmit(registerationForm)" class="my-3 space-y-3">
   <div class="text-center">
     <h2 class="mb-1 text-3xl font-semibold text-gray-700 dark:text-white">
       Sign Up <span class="text-primary-500">!</span>
@@ -31,11 +31,31 @@
       </div>
     </div>
     <div class="relative">
-      <input type="password" id="password" class="peer block py-1" placeholder=" " formControlName="password" required />
-      <label for="password"
-        class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-xs text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
-        Password
-      </label>
+      <div *ngIf="!isShowPassword()">
+        <input type="password" id="password" class="peer block py-1" placeholder=" " formControlName="password"
+          required />
+        <label for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-xs text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Password
+        </label>
+        <span class="absolute top-2.5 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+          <svg-icon src="assets/icons/outline/eye-off.svg" [svgClass]="'h-5 w-5'" (click)="toggleShowPassword()">
+          </svg-icon>
+        </span>
+      </div>
+
+      <div *ngIf="isShowPassword()">
+        <input type="text" id="password" class="peer block py-1" placeholder=" " formControlName="password" required />
+        <label for="password"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-white px-2 text-xs text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary-600 dark:bg-night-700 dark:text-night-200">
+          Password
+        </label>
+        <span class="absolute top-2.5 right-5 cursor-pointer text-gray-400 dark:text-night-300">
+          <svg-icon src="assets/icons/outline/eye.svg" [svgClass]="'h-5 w-5'" (click)="toggleShowPassword()">
+          </svg-icon>
+        </span>
+      </div>
+
       <div *ngIf="(field['password']?.invalid && field['password']?.touched)"
         class="bg-red-100 rounded-lg py-1 px-2 m-2 text-xs text-red-700">
         <div *ngIf="field['password']?.errors?.['forbiddenString']"> password can not contain word:
@@ -45,18 +65,15 @@
         <div *ngIf="field['password']?.errors?.['maxlength']"> password maxmimum length is 10 characters </div>
       </div>
 
-      <span class="absolute top-2.5 right-5 cursor-pointer text-gray-400 dark:text-night-300">
-        <svg-icon src="assets/icons/outline/eye-off.svg" [svgClass]="'h-5 w-5'"> </svg-icon>
-        <svg-icon src="assets/icons/outline/eye.svg" [svgClass]="'h-5 w-5 hidden'"> </svg-icon>
-      </span>
+
     </div>
-    <!-- Password Meeter -->
+    <!-- Password Meeter 
     <div class="grid grid-cols-4 gap-2">
       <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
       <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
       <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
       <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
-    </div>
+    </div> -->
     <span class="text-xs text-gray-400 dark:text-night-300">Use 5-10 characters with a mix of letters, numbers &
       symbols.</span>
     <div class="relative">
@@ -94,12 +111,60 @@
       </div>
 
     </div>
+
+    <div class="grid grid-cols-4 gap-4 items-center">
+      <div class="ml-2 block text-sm font-semibold text-gray-600 dark:text-night-200">Gender </div>
+
+      <div class="custom-control custom-radio">
+        <input id="na" type="radio" class="custom-control-input" name="gender" formControlName="gender" value="NA"
+          checked>
+        <label class="ml-2 text-xs font-light text-gray-400 dark:text-night-200" for="na">Un-Known</label>
+      </div>
+
+      <div class="custom-control custom-radio">
+        <input id="male" type="radio" class="custom-control-input" name="gender" formControlName="gender" value="MALE"
+          checked>
+        <label class="ml-2 text-xs font-light text-gray-400 dark:text-night-200" for="male">Male</label>
+      </div>
+
+      <div class="custom-control custom-radio">
+        <input id="female" type="radio" class="custom-control-input" name="gender" formControlName="gender"
+          value="FEMALE" checked>
+        <label class="ml-2 text-xs font-light text-gray-400 dark:text-night-200" for="female">Female</label>
+      </div>
+
+      <div class="ml-2 block text-sm font-semibold text-gray-600 dark:text-night-200">User Type</div>
+
+      <div class="custom-control custom-radio">
+        <input id="student" type="radio" class="custom-control-input" name="groupType" formControlName="groupType"
+          value="STUDENT" checked>
+        <label class="ml-2 text-xs font-light text-gray-400 dark:text-night-200" for="na">Stuent</label>
+      </div>
+
+      <div class="custom-control custom-radio">
+        <input id="parent" type="radio" class="custom-control-input" name="groupType" formControlName="groupType"
+          value="PARENT" checked>
+        <label class="ml-2 text-xs font-light text-gray-400 dark:text-night-200" for="male">Parent</label>
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+
+  <div class="grid grid-cols-4 gap-2">
+    <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
+    <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
+    <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
+    <div class="h-1 rounded-sm bg-gray-200 dark:bg-night-500"></div>
   </div>
 
   <div class="flex items-center justify-between space-x-3">
     <div class="flex items-center">
-      <input id="accept-term" name="accept-term" type="checkbox" />
-      <label for="accept-term" class="ml-2 block text-xs text-gray-400 dark:text-night-200">
+      <input id="acceptTerm" name="acceptTerm" type="checkbox" formControlName="acceptTerm" />
+      <label for="acceptTerm" class="ml-2 block text-xs text-gray-400 dark:text-night-200">
         I Accept the
         <a class="font-medium text-primary-500 hover:text-primary-400"> Terms </a>
       </label>
@@ -107,10 +172,20 @@
   </div>
 
   <!-- Submit Button -->
-  <button type="button" routerLink="/dashboard"
-    class="group relative mb-10 flex w-full justify-center rounded-md border border-transparent bg-primary-500 py-2 px-4 text-xs font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
-    Sign up
-  </button>
+  <div *ngIf="isReadySubmit()">
+    <button type="submit" [disabled]="registerationForm.invalid"
+      class="group relative mb-5 flex w-full justify-center rounded-md border border-transparent bg-primary-500 
+            py-2 px-4 text-xs font-medium text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+      Sign up
+    </button>
+  </div>
+
+  <div *ngIf="!isReadySubmit()">
+    <button type="button" class="group relative mb-5 flex w-full justify-center rounded-md border border-transparent bg-gray-200
+            py-2 px-4 text-xs font-medium text-white">
+      Sign up
+    </button>
+  </div>
 
   <!-- Sign-up -->
   <div class="text-sm text-gray-400 dark:text-night-200">

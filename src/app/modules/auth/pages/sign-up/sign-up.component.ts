@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { forbiddenStringValidator, matchString } from 'src/app/shared/validators/password-validator';
+import { AccountRegistrationDTO } from '../../model/Auth';
+import { SignupService } from '../../services/signup.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,8 +13,10 @@ import { forbiddenStringValidator, matchString } from 'src/app/shared/validators
 export class SignUpComponent implements OnInit {
 
   registerationForm!: FormGroup;
+  private showPassword = false;
+  private readySubmit: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerationForm = this.fb.group({
@@ -20,13 +25,87 @@ export class SignUpComponent implements OnInit {
       confirm_password: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      gender:[''],
-      groupType: ['']}, 
-      
-      {validators: [matchString('password', 'confirm_password')]}) ;
+      gender: ['NA'],
+      groupType: ['STUDENT'],
+      acceptTerm: [false]
+    },
+
+      { validators: [matchString('password', 'confirm_password')] });
+
+    this.registerationForm.get('acceptTerm')?.valueChanges.
+      subscribe(checkedValue => {
+        console.log("term change=" + checkedValue)
+        if (checkedValue) {
+          this.readySubmit = true;
+        }
+        else {
+          this.readySubmit = false;
+        }
+        console.log("ready submit=" + this.readySubmit);
+      })
+
   }
 
+  onSubmit(form: FormGroup) {
+    this.signupService.signUp(this.map(form))
+      .subscribe(u => {
+        console.log("signup successful");
+        this.success();
+
+      
+      
+    }, (error) => {
+      this.submitErrorHandler(error)
+      console.log("error happened=" + error);
+    });
+  
+}
+
+map(form: FormGroup) {
+
+  const typeList = [];
+  typeList.push(form.get('groupType')?.value);
+  const inputUser: AccountRegistrationDTO = {
+
+    emailAddress: form.get('email')?.value,
+    password: form.get('password')?.value,
+    firstName: form.get('firstName')?.value,
+    lastName: form.get('lastName')?.value,
+    gender: form.get('gender')?.value,
+    loginSourceType: "NULL",
+    groupTypeList: typeList,
+  };
+
+  return inputUser;
+
+}
+
   get field(){
-    return this.registerationForm!.controls;
-  }
+  return this.registerationForm!.controls;
+}
+
+toggleShowPassword(){
+  this.showPassword = !this.showPassword;
+}
+
+isShowPassword(){
+  return this.showPassword;
+}
+
+isReadySubmit(){
+  return this.readySubmit;
+}
+
+private submitErrorHandler(error: any) {
+  alert("submit failed" + error.errorMessage);
+}
+
+success() {
+
+  alert("submit success!" );
+  this.router.navigate(['/dashboard/nfts']);
+ 
+}
+
+
 }

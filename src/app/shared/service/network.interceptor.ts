@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
+import { UrlSerializer } from '@angular/router';
 
 @Injectable()
 export class NetworkInterceptor implements HttpInterceptor {
@@ -24,7 +25,9 @@ export class NetworkInterceptor implements HttpInterceptor {
 
     this.loader.show();
     this.totalRequests++;
-    console.log("network inceptor triggered=" + request.params);
+    console.log("network inceptor url=" + request.urlWithParams);
+    console.log("network inceptor body=" + JSON.stringify(request.body));
+    console.log("network inceptor header=" + request.headers);
 
     return next.handle(request).pipe(
       finalize(() => {
