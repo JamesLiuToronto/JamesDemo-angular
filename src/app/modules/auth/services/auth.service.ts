@@ -17,8 +17,7 @@ export class AuthService {
   }
 
   login(form: LoginForm) : Observable<LoginResult>{
-    let url: string = "http://localhost:9091/login";
-    //let url: string = "http://localhost:4200/api/signin";
+    let url: string = "http://localhost:9091/account/login";
     console.log("url= " + url);
     console.log("form.email= " + form.email);
     let params = new HttpParams().
@@ -30,49 +29,7 @@ export class AuthService {
     return this.http.post<LoginResult>(url,{ headers: headers }, { params: params });
   }
 
-/*
-  login(form: LoginForm): boolean {
-
-    let url: string = "http://localhost:9091/login";
-    //let url: string = "http://localhost:4200/api/signin";
-    console.log("url= " + url);
-    console.log("form.email= " + form.email);
-    let params = new HttpParams().
-        append('username', form.email).
-        append('password', form.password);
-    const headers = new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set("Content-Type", "application/x-www-form-urlencoded");
-    this.http.post<LoginResult>(url,{ headers: headers }, { params: params }).
-      subscribe(u => {
-        this.loginAccount = u;
-        
-        if (this.loginAccount != undefined){
-          localStorage.setItem('userId', this.loginAccount.userId.toString());
-          localStorage.setItem('token', this.loginAccount.token);
-          localStorage.setItem('account', encodeURI(JSON.stringify(this.loginAccount.account)));
-          console.log("userid=" + localStorage.getItem('userId'));
-          this.enableAuthenticated();
-          console.log("before return true") ;
-          this.result = true ;
-         
-        } else {
-          console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
-          this.result = false ;
-        }
-        
-      }, (error) => {
-        this.loginErrorHandler(error)
-        console.log("error happened")
-        this.result = false ;;
-      });
-      console.log("service return=" + this.result) ;
-      return this.result ;
-
-  }
-  */
-
-  
+ 
 
   enableAuthenticated() {
     localStorage.setItem('isAuthenticated', 'true');

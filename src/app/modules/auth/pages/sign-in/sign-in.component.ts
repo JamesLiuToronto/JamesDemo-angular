@@ -13,6 +13,7 @@ export class SignInComponent implements OnInit {
   errorMessage: string | undefined;;
   loginAccount: LoginResult | undefined;
   serviceResult: string = "0" ;
+  private showPassword = false;
   form: LoginForm = {
     email: '',
     password: '',
@@ -38,14 +39,13 @@ export class SignInComponent implements OnInit {
         localStorage.setItem('userId', this.loginAccount.userId.toString());
         localStorage.setItem('token', this.loginAccount.token);
         localStorage.setItem('account', encodeURI(JSON.stringify(this.loginAccount.account)));
-        console.log("userid=" + localStorage.getItem('userId'));
+        console.log("token=" + localStorage.getItem('token'));
         this.authService.enableAuthenticated();
-        console.log("before return true") ;
         this.goHome();
        
       } else {
         console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
-        
+        this.loginErrorHandler("Wrong result=" + encodeURI(JSON.stringify(this.loginAccount))) ;
       }
       
     }, (error) => {
@@ -69,6 +69,14 @@ export class SignInComponent implements OnInit {
   goHome() {
     this.router.navigate(['/dashboard/nfts']);
    
+  }
+
+  toggleShowPassword(){
+    this.showPassword = !this.showPassword;
+  }
+  
+  isShowPassword(){
+    return this.showPassword;
   }
 
 }
