@@ -1,0 +1,20 @@
+<p>user works!</p>
+<p>{{this.user?.userId}}</p>
+<p>{{this.user?.userStatus}}</p>
+<p>{{this.user?.emailAddress}</p>
+<p></p>
+<button (click)="this.goBack()">
+    go back
+</button>
+
+<button
+   (click)="this.activateUser()"
+    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+    Activate User
+</button>
+
+<button
+   (click)="this.deactivateUser()"
+    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+    Deactivate User
+</button>

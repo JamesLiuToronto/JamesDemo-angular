@@ -6,6 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DownloadComponent } from './download/download.component';
 import { RolesComponent } from './roles/roles.component';
 import { UsersComponent } from './users/users.component';
+import { UserComponent } from './users/user/user.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { UsersComponent } from './users/users.component';
     DownloadComponent,
     RolesComponent,
     UsersComponent,
+    UserComponent,
     
   ],
   imports: [CommonModule, AdminRoutingModule, AngularSvgIconModule.forRoot()],

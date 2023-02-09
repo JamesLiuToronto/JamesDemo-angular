@@ -5,7 +5,7 @@
     <div class="mt-4 text-md font-bold text-green-900">Loading ...</div>
  
 </div>
-<div class="mx-auto px-4 py-4 sm:px-8 lg:container">
+<div class="mx-auto px-3 py-4 sm:px-3 lg:container">
 
     <!-- Auctions Table -->
     <div nft-auctions-table class="sm:col-span-1 md:col-span-2 xl:col-span-3">
@@ -13,8 +13,8 @@
         <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
             <div class="mb-4 flex items-center justify-between">
                 <div class="flex-col items-center">
-                    <h3 class="text-md font-bold text-gray-900 dark:text-night-50">Register Users</h3>
-                    <span class="text-sm text-gray-400 dark:text-night-300">Last Retrieve Time: {{lastRetrieveTime}}</span>
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-night-50">Registered Users</h3>
+                    <span class="text-xs text-gray-400 dark:text-night-300">Last Retrieve Time: {{lastRetrieveTime}}</span>
                 </div>
                 <button
                     (click)="this.getUserList()"
@@ -29,6 +29,7 @@
                     <thead class="text-xs uppercase text-gray-400 dark:text-night-100">
                         <tr>
                             <th class="py-3 text-left"> Email</th>
+                            <th class="py-3 text-left">Status</th>
                             <th class="py-3 text-left">First Name</th>
                             <th class="py-3 text-left">Last Name</th>
                             <th class="py-3 text-right">View</th>
@@ -38,11 +39,13 @@
                     <!--end Table head-->
                     <!--Table body-->
                     <tbody>
-                        <tr *ngFor="let user of users"
+                        <tr *ngFor="let user of users ;let indexOfelement=index;"
                             class="border-b border-dashed border-gray-200 dark:border-night-500 hover:bg-slate-200">
 
                             <td class="px-1 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-night-100">{{
-                                user.email }} </td>
+                                user.emailAddress }} </td>
+                            <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">{{
+                                    user.userStatus }} </td>    
                             <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">{{
                                 user.firstName }}</td>
                             <td class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">{{
@@ -50,6 +53,7 @@
                                 <td class="py-2 pl-2 text-right">
                                     <div class="flex justify-end">
                                       <button
+                                      (click)="this.viewUser(indexOfelement)"
                                         href="#"
                                         class="flex h-7 w-7 items-center justify-center rounded-md bg-gray-200 text-gray-400 dark:bg-night-500 dark:text-night-300">
                                         <svg-icon src="assets/icons/outline/arrow-sm-right.svg" [svgClass]="'h-5 w-5'"> </svg-icon>

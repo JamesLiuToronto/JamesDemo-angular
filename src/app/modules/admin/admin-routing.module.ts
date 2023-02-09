@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DownloadComponent } from './download/download.component';
 import { RolesComponent } from './roles/roles.component';
+import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users.component';
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'download', component: DownloadComponent, data: { returnUrl: window.location.pathname } },
       { path: 'roles', component: RolesComponent },
       { path: 'users', component: UsersComponent,},
+      { path: 'user', component: UserComponent,},
     ],
   },
 ];

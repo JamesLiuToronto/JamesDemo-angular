@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/shared/service/loading.service';
 import { User } from '../model/User';
 import { UsersService } from '../services/users.service';
@@ -16,15 +17,9 @@ export class UsersComponent implements OnInit  {
   lastRetrieveTime: Date | undefined ;
   loading$ = this.loader.loading$ ;
 
-  constructor(public loader: LoadingService, private usersService: UsersService) { 
+  constructor(public loader: LoadingService, private usersService: UsersService, private router: Router,) { 
   }
   ngOnInit(): void {
-
-    console.log("users component init triggered") ;
-    this.usersService.userChangeEmitter.subscribe(()=>{
-      this.getUserList() ; 
-      return ;
-    })
 
     if (this.users.length == 0){
      this.getUserList() ; 
@@ -37,16 +32,14 @@ export class UsersComponent implements OnInit  {
   getUserList() {
 
 
-    this.usersService.getUsers()
+    this.usersService.getUserList()
       .subscribe(u => {
         this.users= u ;
         console.log("this users", this.users);
         console.log("loading flag =" + this.loading$) ;
         this.lastRetrieveTime = new Date() ;
       }, (error) => this.usersErrorHandler(error), ()=>{
-        this.usersService.setNextUserId(this.users.length + 1) ;
-        console.log("id get back=" + this.usersService.getNextUserId()) ;
-        console.log("loading flag finish=" + this.loading$) ;  
+       console.log("loading flag finish=" + this.loading$) ;  
       });
       
      
@@ -56,6 +49,11 @@ export class UsersComponent implements OnInit  {
     alert("user Retrieve failed" + error.message);
     console.log("catch error =" + error.errorMessage);
 
+  }
+
+  viewUser(index : number){
+    this.usersService.setSelectedUser(this.users[index]);
+    this.router.navigateByUrl('/admin/user');
   }
   
   
