@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorService } from 'src/app/shared/service/http-error.service';
 import { LoadingService } from 'src/app/shared/service/loading.service';
 import { User } from '../model/User';
 import { UsersService } from '../services/users.service';
@@ -16,8 +17,10 @@ export class UsersComponent implements OnInit  {
   users: User[] = [];
   lastRetrieveTime: Date | undefined ;
   loading$ = this.loader.loading$ ;
+  title:string = "Retrieve User List" ;
+  
 
-  constructor(public loader: LoadingService, private usersService: UsersService, private router: Router,) { 
+  constructor(public loader: LoadingService, private usersService: UsersService, private router: Router, private httpError: HttpErrorService) { 
   }
   ngOnInit(): void {
 
@@ -38,24 +41,17 @@ export class UsersComponent implements OnInit  {
         console.log("this users", this.users);
         console.log("loading flag =" + this.loading$) ;
         this.lastRetrieveTime = new Date() ;
-      }, (error) => this.usersErrorHandler(error), ()=>{
+      }, (error) => this.httpError.loginErrorHandler(this.title, error), ()=>{
        console.log("loading flag finish=" + this.loading$) ;  
       });
       
      
   }
 
-  private usersErrorHandler(error: any) {
-    alert("user Retrieve failed" + error.message);
-    console.log("catch error =" + error.errorMessage);
-
-  }
-
   viewUser(index : number){
     this.usersService.setSelectedUser(this.users[index]);
     this.router.navigateByUrl('/admin/user');
   }
-  
   
   
 

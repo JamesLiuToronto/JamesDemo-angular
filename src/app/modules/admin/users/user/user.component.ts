@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { Location } from '@angular/common';
 import { User } from '../../model/User';
+import { HttpErrorService } from 'src/app/shared/service/http-error.service';
 
 @Component({
   selector: 'app-user',
@@ -11,7 +12,8 @@ import { User } from '../../model/User';
 export class UserComponent implements  OnInit {
 
   user : User |undefined ;
-  constructor(private usersService : UsersService, private location: Location,){}
+  constructor(private usersService : UsersService, private location: Location, private httpError: HttpErrorService){}
+  
 
   ngOnInit(): void {
     this.user = this.usersService.getSelectedUser();
@@ -25,28 +27,29 @@ export class UserComponent implements  OnInit {
   }
   
   activateUser(){
+    const title = "Activate User" ;
     this.usersService.activateUser()
     .subscribe(u => {
       this.user = u ;
       alert(" activate user success = " + this.user.userStatus);
-    }, (error) => this.userErrorHandler(error), ()=>{
+    }, (error) => this.httpError.loginErrorHandler(title, error), ()=>{
      console.log("activate User finish=" ) ;  
     });
   }
   deactivateUser(){
+    const title = "Deactivate User" ;
     this.usersService.deactivateUser()
     .subscribe(u => {
       this.user = u ;
       alert(" deactivate user success = " + this.user.userStatus);
-    }, (error) => this.userErrorHandler(error), ()=>{
+    }, (error) => this.httpError.loginErrorHandler(title, error), ()=>{
      console.log("deactivate User finish=" ) ;  
     });
   }
 
-  private userErrorHandler(error: any) {
-    alert("user operation failed" + error.message);
-    console.log("catch error =" + error.errorMessage);
-
+  isAdminUers(){
+    console.log("save role=" + localStorage.getItem('roles')?.includes("ADMIN") );
+    return localStorage.getItem('roles')?.includes("ADMIN") ;
   }
 
 }

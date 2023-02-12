@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoginForm, LoginResult } from '../../model/Auth';
+import { ErrorDTO } from 'src/app/shared/models/ErrorDTO';
+import { AccountDTO, LoginForm, LoginResult } from '../../model/Auth';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -38,25 +39,27 @@ export class SignInComponent implements OnInit {
       if (this.loginAccount != undefined){
         localStorage.setItem('userId', this.loginAccount.userId.toString());
         localStorage.setItem('token', this.loginAccount.token);
-        localStorage.setItem('account', encodeURI(JSON.stringify(this.loginAccount.account)));
+        localStorage.setItem('account', JSON.stringify(this.loginAccount.account));
+        localStorage.setItem('roles', this.loginAccount.account.roleList);
         console.log("token=" + localStorage.getItem('token'));
         this.authService.enableAuthenticated();
         this.goHome();
        
       } else {
         console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
-        this.loginErrorHandler("Wrong result=" + encodeURI(JSON.stringify(this.loginAccount))) ;
+        //this.loginErrorHandler("Wrong result=" + encodeURI(JSON.stringify(this.loginAccount))) ;
       }
       
-    }, (error) => {
+    }, (error: ErrorDTO) => {
       this.loginErrorHandler(error)
-      console.log("error happened=" + error) ;
+      console.log("error happened2=" + JSON.stringify(error)) ;
     });
   }
 
-  private loginErrorHandler(error: any) {
-    alert("login failed" + error.message);
-    console.log("catch error =" + error.errorMessage);
+  private loginErrorHandler(error: ErrorDTO) {
+
+    alert("login failed" + error.error);
+    console.log("catch error =" + error.status);
   }
 
 

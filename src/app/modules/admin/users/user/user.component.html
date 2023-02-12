@@ -7,13 +7,19 @@
     go back
 </button>
 
-<button
+<button *ngIf="isAdminUers()"
    (click)="this.activateUser()"
     class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
     Activate User
 </button>
 
-<button
+<button *ngIf="!isAdminUers()"
+   (click)="this.activateUser()"
+    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+    Activate User from token
+</button>
+
+<button *ngIf="isAdminUers()"
    (click)="this.deactivateUser()"
     class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
     Deactivate User

@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
-import { UrlSerializer } from '@angular/router';
+
 
 @Injectable()
 export class NetworkInterceptor implements HttpInterceptor {

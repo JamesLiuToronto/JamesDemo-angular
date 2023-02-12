@@ -21,19 +21,15 @@ export interface AccountRegistrationDTO {
 }
 
 
-
 export interface AccountDTO {
-  uuid: String;
+  uuid: string;
   userId: number;
   emailAddress: EmailAddress;
-  personInfo: PersonInfo;
+  firstName: string;
+  lastName:string
   userStatus: string;
-  userGroups: string;
   note: string | undefined;
-  active: boolean;
   roleList: string;
-  disable: boolean;
-  pending: boolean;
 }
 
 export interface PersonInfo {
