@@ -2,6 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../model/User';
 import { delay, Observable } from 'rxjs';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
+import { SimpleResultDTO } from 'src/app/shared/models/SimpleResultDTO';
 
 
 @Injectable({
@@ -17,46 +19,37 @@ export class UsersService {
 
   userChangeEmitter = new EventEmitter() ;
 
-  constructor( private http: HttpClient) {
+  constructor( private http: HttpClient, private httpUtility :HttpUtilityService) {
   
   }
  
-  private baseUrl:string = "http://localhost:9091/api/account" ;
+  private baseUrl:string = "http://localhost:9091" ;
 
   raiseChangeUserEmitter(data :boolean){
     this.userChangeEmitter.emit(data) ;
   }
 
-  // getUsers() {
-  //   console.log("url= " + this.baseUrl);
-  //   return this.http.get<User[]>(this.baseUrl).pipe(delay(500));
-    
-  // }
-
   getUserList() : Observable<User[]>{
-    return this.http.get<User[]>(this.baseUrl,{ headers: this.getHeader()});
+    return this.http.get<User[]>(this.baseUrl + "/api/account",{ headers: this.httpUtility.getHeader()});
   }
 
   activateUser() : Observable<User>{
-    let url = this.baseUrl + "/" + this.selectedUser?.userId + "/activate"
-    return this.http.put<User>(url, null, { headers: this.getHeader() });
+    let url = this.baseUrl + "/api/account/" + this.selectedUser?.userId + "/activate"
+    return this.http.put<User>(url, null, { headers: this.httpUtility.getHeader() });
   }
 
   deactivateUser() : Observable<User>{
-    let url = this.baseUrl + "/" + this.selectedUser?.userId + "/deactivate"
-    return this.http.put<User>(url, null, { headers: this.getHeader() });
+    let url = this.baseUrl + "/api/account/" + this.selectedUser?.userId + "/deactivate"
+    return this.http.put<User>(url, null, { headers: this.httpUtility.getHeader() });
   }
 
-  getHeader(): HttpHeaders{
-    const auth_token = localStorage.getItem('token') ; 
-    console.log("token=" + auth_token) ;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${auth_token}`
-    });
-    return headers;
+  getActivateToken() : Observable<SimpleResultDTO>{
+    return this.http.get<SimpleResultDTO>(this.baseUrl + "/api/login/activate-token/" + this.selectedUser?.userId,{ headers: this.httpUtility.getHeader()});
   }
 
+  processActivateToken(token:string) : Observable<string>{
+    return this.http.get<string>(this.baseUrl + "/process/" + token);
+  }
 
   setSelectedUser(user :User){
     this.selectedUser = user ;

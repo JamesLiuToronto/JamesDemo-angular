@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorService } from 'src/app/shared/service/http-error.service';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 import { LoadingService } from 'src/app/shared/service/loading.service';
 import { User } from '../model/User';
 import { UsersService } from '../services/users.service';
@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit  {
   title:string = "Retrieve User List" ;
   
 
-  constructor(public loader: LoadingService, private usersService: UsersService, private router: Router, private httpError: HttpErrorService) { 
+  constructor(public loader: LoadingService, private usersService: UsersService, private router: Router, private httpError: HttpUtilityService) { 
   }
   ngOnInit(): void {
 

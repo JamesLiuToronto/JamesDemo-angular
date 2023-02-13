@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ErrorDTO } from 'src/app/shared/models/ErrorDTO';
-import { AccountDTO, LoginForm, LoginResult } from '../../model/Auth';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
+import { LoginForm, LoginResult } from '../../model/Auth';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -15,12 +16,15 @@ export class SignInComponent implements OnInit {
   loginAccount: LoginResult | undefined;
   serviceResult: string = "0" ;
   private showPassword = false;
+
+  title:string = " Login " ;
+
   form: LoginForm = {
     email: '',
     password: '',
   };
 
-  constructor(private authService: AuthService, private router: Router, private routes: ActivatedRoute) {
+  constructor(private authService: AuthService, private router: Router, private routes: ActivatedRoute, private httpUtility:HttpUtilityService) {
   }
   ngOnInit(): void {
 
@@ -51,18 +55,12 @@ export class SignInComponent implements OnInit {
       }
       
     }, (error: ErrorDTO) => {
-      this.loginErrorHandler(error)
+      this.httpUtility.loginErrorHandler(this.title,error) ;
       console.log("error happened2=" + JSON.stringify(error)) ;
     });
   }
 
-  private loginErrorHandler(error: ErrorDTO) {
-
-    alert("login failed" + error.error);
-    console.log("catch error =" + error.status);
-  }
-
-
+  
   logout() {
     this.authService.logoutService();
     console.log("call logout service=" + this.authService.isAuthenticated)

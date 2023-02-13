@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { Location } from '@angular/common';
 import { User } from '../../model/User';
-import { HttpErrorService } from 'src/app/shared/service/http-error.service';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
+import { SimpleResultDTO } from 'src/app/shared/models/SimpleResultDTO';
 
 @Component({
   selector: 'app-user',
@@ -12,7 +13,7 @@ import { HttpErrorService } from 'src/app/shared/service/http-error.service';
 export class UserComponent implements  OnInit {
 
   user : User |undefined ;
-  constructor(private usersService : UsersService, private location: Location, private httpError: HttpErrorService){}
+  constructor(private usersService : UsersService, private location: Location, private httpUtility: HttpUtilityService){}
   
 
   ngOnInit(): void {
@@ -32,7 +33,7 @@ export class UserComponent implements  OnInit {
     .subscribe(u => {
       this.user = u ;
       alert(" activate user success = " + this.user.userStatus);
-    }, (error) => this.httpError.loginErrorHandler(title, error), ()=>{
+    }, (error) => this.httpUtility.loginErrorHandler(title, error), ()=>{
      console.log("activate User finish=" ) ;  
     });
   }
@@ -42,14 +43,35 @@ export class UserComponent implements  OnInit {
     .subscribe(u => {
       this.user = u ;
       alert(" deactivate user success = " + this.user.userStatus);
-    }, (error) => this.httpError.loginErrorHandler(title, error), ()=>{
+    }, (error) => this.httpUtility.loginErrorHandler(title, error), ()=>{
      console.log("deactivate User finish=" ) ;  
     });
   }
 
-  isAdminUers(){
-    console.log("save role=" + localStorage.getItem('roles')?.includes("ADMIN") );
-    return localStorage.getItem('roles')?.includes("ADMIN") ;
+  sendActivateToken(){
+    const title = "send Activate Token " ;
+    this.usersService.getActivateToken()
+    .subscribe(u => {
+      let result:SimpleResultDTO = u ;
+      alert(" activete Token is = " + result.note );
+      console.log("activete Token  =" + result.note) ;  
+    }, (error) => this.httpUtility.loginErrorHandler(title, error), ()=>{
+     console.log("deactivate User finish=" ) ;  
+    });
   }
+
+  isPending(){
+    return this.user?.userStatus.includes("PENDING") ;
+  }
+
+  isActive(){
+    return this.user?.userStatus.includes("ACTIVE") ;
+  }
+
+  isDisable(){
+    return this.user?.userStatus.includes("DISABLE") ;
+  }
+
+
 
 }

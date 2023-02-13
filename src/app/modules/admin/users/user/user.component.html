@@ -3,24 +3,29 @@
 <p>{{this.user?.userStatus}}</p>
 <p>{{this.user?.emailAddress}</p>
 <p></p>
-<button (click)="this.goBack()">
-    go back
-</button>
 
-<button *ngIf="isAdminUers()"
-   (click)="this.activateUser()"
-    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-    Activate User
-</button>
+<div class="flex space-x-4">
+    <button (click)="this.goBack()">
+        go back
+    </button>
+    <button *ngIf="isPending()" (click)="this.activateUser()"
+        class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+        Activate User
+    </button>
 
-<button *ngIf="!isAdminUers()"
-   (click)="this.activateUser()"
-    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-    Activate User from token
-</button>
 
-<button *ngIf="isAdminUers()"
-   (click)="this.deactivateUser()"
-    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-    Deactivate User
-</button>
+    <button *ngIf="isPending()" (click)="this.sendActivateToken()"
+        class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+        Send Activate token
+    </button>
+
+    <button *ngIf="isActive()" (click)="this.deactivateUser()"
+        class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+        Deactivate User
+    </button>
+
+    <button *ngIf="isDisable()" (click)="this.deactivateUser()"
+        class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
+        Enable User
+    </button>
+</div>
