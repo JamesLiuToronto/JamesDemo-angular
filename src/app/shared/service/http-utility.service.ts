@@ -1,5 +1,6 @@
 import { HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { ErrorDTO } from "../models/ErrorDTO";
 
 
@@ -8,9 +9,17 @@ import { ErrorDTO } from "../models/ErrorDTO";
   })
   export class HttpUtilityService {
 
+    constructor(private router: Router){
+      
+    }
+
     public loginErrorHandler(title:string, error: ErrorDTO) {
 
         alert(title + "-" + error.status + "-" + error.error);
+        if (error.status == 401){
+          this.router.navigateByUrl('/auth/sing-in');
+        }
+
         console.log(error.error + " " + error.message) ;
     }
 

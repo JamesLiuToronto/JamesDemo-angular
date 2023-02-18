@@ -38,9 +38,11 @@ export class UsersService {
     return this.http.put<User>(url, null, { headers: this.httpUtility.getHeader() });
   }
 
-  deactivateUser() : Observable<User>{
+  deactivateUser(reason:string) : Observable<User>{
     let url = this.baseUrl + "/api/account/" + this.selectedUser?.userId + "/deactivate"
-    return this.http.put<User>(url, null, { headers: this.httpUtility.getHeader() });
+    let params = new HttpParams().
+        append('reason', reason);
+    return this.http.put<User>(url, null, { headers: this.httpUtility.getHeader(),  params: params });
   }
 
   getActivateToken() : Observable<SimpleResultDTO>{
