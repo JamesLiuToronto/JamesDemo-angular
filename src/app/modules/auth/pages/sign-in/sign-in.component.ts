@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ErrorDTO } from 'src/app/shared/models/ErrorDTO';
-import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
+import { PopupWindowService } from 'src/app/shared/service/popup-window.service';
 import { LoginForm, LoginResult } from '../../model/Auth';
 import { AuthService } from '../../services/auth.service';
 
@@ -24,7 +24,7 @@ export class SignInComponent implements OnInit {
     password: '',
   };
 
-  constructor(private authService: AuthService, private router: Router, private routes: ActivatedRoute, private httpUtility:HttpUtilityService) {
+  constructor(private authService: AuthService, private router: Router, private routes: ActivatedRoute, private popWindowService: PopupWindowService) {
   }
   ngOnInit(): void {
 
@@ -55,7 +55,7 @@ export class SignInComponent implements OnInit {
       }
       
     }, (error: ErrorDTO) => {
-      this.httpUtility.loginErrorHandler(this.title,error) ;
+      this.errorHandler(this.title,error) ;
       console.log("error happened2=" + JSON.stringify(error)) ;
     });
   }
@@ -79,5 +79,17 @@ export class SignInComponent implements OnInit {
   isShowPassword(){
     return this.showPassword;
   }
+
+  errorHandler(title: string, error: ErrorDTO) {
+
+    this.popWindowService.openPopWindow("ERROR", title + " - Error - (" + error.status + ")", error.error) ;
+
+  }
+
+  infoHandler(title: string, message:string) {
+
+    this.popWindowService.openPopWindow("INFO", "INFO -- " + title , message) ;
+  }
+
 
 }

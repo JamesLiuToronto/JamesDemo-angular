@@ -1,10 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { PopupWindowService } from '../../service/popup-window.service';
 
 @Component({
   selector: 'app-popup-window',
+  standalone: true,
   templateUrl: './popup-window.component.html',
-  styleUrls: ['./popup-window.component.css']
+  styleUrls: ['./popup-window.component.css'],
+  imports: [CommonModule],
+
 })
 export class PopupWindowComponent {
 

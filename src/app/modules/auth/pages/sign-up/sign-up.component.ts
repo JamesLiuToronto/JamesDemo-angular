@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PopupWindowService } from 'src/app/shared/service/popup-window.service';
 import { forbiddenStringValidator, matchString } from 'src/app/shared/validators/password-validator';
 import { AccountRegistrationDTO } from '../../model/Auth';
 import { SignupService } from '../../services/signup.service';
@@ -16,7 +17,7 @@ export class SignUpComponent implements OnInit {
   private showPassword = false;
   private readySubmit: boolean = false;
 
-  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router) { }
+  constructor(private fb: FormBuilder, private signupService: SignupService, private router: Router, private popWindowService: PopupWindowService) { }
 
   ngOnInit(): void {
     this.registerationForm = this.fb.group({
@@ -97,12 +98,12 @@ isReadySubmit(){
 }
 
 private submitErrorHandler(error: any) {
-  alert("submit failed" + error.errorMessage);
+  this.popWindowService.openPopWindow("ERROR", " Sign Up failed with Error (" + error.status + ")", error.error) ;
 }
 
 success() {
 
-  alert("submit success!" );
+  this.popWindowService.openPopWindow("INFO", "User SignUp Successfully ", "Please check email to activate this singup user") ;
   this.router.navigate(['/dashboard/nfts']);
  
 }

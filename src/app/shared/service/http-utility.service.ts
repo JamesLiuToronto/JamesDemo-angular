@@ -13,7 +13,7 @@ import { ErrorDTO } from "../models/ErrorDTO";
       
     }
 
-    public loginErrorHandler(title:string, error: ErrorDTO) {
+    public errorHandler(title:string, error: ErrorDTO) {
 
         alert(title + "-" + error.status + "-" + error.error);
         if (error.status == 401){

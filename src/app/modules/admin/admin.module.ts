@@ -8,7 +8,7 @@ import { RolesComponent } from './roles/roles.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
 
 
 
@@ -20,6 +20,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
         UsersComponent,
         UserComponent,
     ],
-    imports: [CommonModule, FormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(), SharedModule]
+    imports: [CommonModule, FormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]
 })
 export class AdminModule {}

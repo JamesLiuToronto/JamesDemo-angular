@@ -10,16 +10,18 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
 import { TwoStepsComponent } from './pages/two-steps/two-steps.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
+
 
 @NgModule({
-  declarations: [
-    AuthComponent,
-    SignInComponent,
-    SignUpComponent,
-    ForgotPasswordComponent,
-    NewPasswordComponent,
-    TwoStepsComponent,
-  ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,  AuthRoutingModule, AngularSvgIconModule.forRoot()],
+    declarations: [
+        AuthComponent,
+        SignInComponent,
+        SignUpComponent,
+        ForgotPasswordComponent,
+        NewPasswordComponent,
+        TwoStepsComponent,
+    ],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AuthRoutingModule, AngularSvgIconModule.forRoot(), PopupWindowComponent]
 })
 export class AuthModule {}

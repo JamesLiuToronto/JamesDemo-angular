@@ -10,7 +10,8 @@ import { PopupWindowService } from 'src/app/shared/service/popup-window.service'
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+
 })
 export class UserComponent implements OnInit {
 
@@ -36,7 +37,7 @@ export class UserComponent implements OnInit {
     this.usersService.activateUser()
       .subscribe(u => {
         this.user = u;
-        alert(" activate user success = " + this.user.userStatus);
+        this.infoHandler("Activate User Successful", "User status is " + this.user.userStatus ) ;
       }, (error) => this.errorHandler(title, error), () => {
         console.log("activate User finish=");
       });
@@ -47,7 +48,7 @@ export class UserComponent implements OnInit {
     this.usersService.deactivateUser("By Admin")
       .subscribe(u => {
         this.user = u;
-        alert(" deactivate user success = " + this.user.userStatus);
+        this.infoHandler("Deactivate User Successful", "User status is " + this.user.userStatus ) ;
       }, (error) => this.errorHandler(title, error), () => {
         console.log("deactivate User finish=");
       });
@@ -60,8 +61,7 @@ export class UserComponent implements OnInit {
         let result: SimpleResultDTO = u;
         this.token = result.note;
         this.toeknDisplay = true;
-        alert(" activete Token is copied to ClipBoard");
-        console.log("activete Token  =" + result.note);
+        this.infoHandler("Activate Token is generated Successful", "token: " + this.token ) ;
       }, (error) => this.errorHandler(title, error), () => {
         console.log("deactivate User finish=");
       });
@@ -84,11 +84,6 @@ export class UserComponent implements OnInit {
     this.popWindowService.openPopWindow("INFO", "INFO -- " + title , message) ;
   }
 
-  displayInfo(){
-    this.infoHandler("This is info", "asdfsafdsafdsaf asdfsdaf asdfdsafds sadfds") ;
-  }
-
-
   isPending() {
     return this.user?.userStatus.includes("PENDING");
   }
@@ -103,10 +98,6 @@ export class UserComponent implements OnInit {
 
   displayToken() {
     return this.toeknDisplay;
-  }
-
-  openPopUP() {
-    return this.popWindowService.showOpen ;
   }
 
 
