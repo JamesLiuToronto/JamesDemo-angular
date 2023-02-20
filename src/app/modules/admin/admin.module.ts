@@ -7,8 +7,9 @@ import { DownloadComponent } from './download/download.component';
 import { RolesComponent } from './roles/roles.component';
 import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
+
 
 
 
@@ -19,7 +20,8 @@ import { PopupWindowComponent } from 'src/app/shared/components/popup-window/pop
         RolesComponent,
         UsersComponent,
         UserComponent,
+
     ],
-    imports: [CommonModule, FormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]
 })
 export class AdminModule {}

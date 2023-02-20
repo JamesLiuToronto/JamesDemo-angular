@@ -1,38 +1,153 @@
-<p>user works!</p>
-<p>{{this.user?.userId}}</p>
-<p>{{this.user?.userStatus}}</p>
-<p>{{this.user?.emailAddress}}</p>
-<p></p>
+<div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row my-5 mx-5">
+    <div class="text-center my-3 space-y-3">
+        <h2 class="mb-1 text-3xl font-semibold text-gray-700 dark:text-white">
+            User Adminitration <span class="text-primary-500">!</span>
+        </h2>
+    </div>
 
-<div class="flex space-x-4">
-    <button (click)="this.goBack()">
-        go back
-    </button>
-    <button *ngIf="isPending()" (click)="this.activateUser()"
-        class="flex-none rounded-md bg-primary-500 px-2 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-        Activate User
-    </button>
+    <div class="my-3 space-y-3">
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-night-500 dark:after:border-night-500">
+            <p class="mx-4 mb-0 text-center text-xs text-gray-400 dark:text-night-400">Email Address Update</p>
+        </div>
+
+        <form [formGroup]="emailForm" (ngSubmit)="emailChangeSubmit(emailForm)">
+            <div class="flex items-center px-4 max-w-full space-x-2">
+                <div class="relative w-4/5 flex-col">
+                    <input type="text" id="email" class="peer block py-1" placeholder=" " formControlName="email"
+                        autocomplete="off" />
+                    <label for="email" class="input_text input_text_noautofil_shadow">Email address</label>
+
+                    <div *ngIf="(emailForm!.controls['email'].invalid && emailForm!.controls['email'].touched)"
+                        class="input_text_error">
+                        <div *ngIf="emailForm!.controls['email']?.errors?.['minlength']"> Email minimum length is 5
+                        </div>
+                        <div *ngIf="emailForm!.controls['email']?.errors?.['required']"> Email is required </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="w-1/5 ">
+                    <button type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                                py-2 px-4 float-right mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                                focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+                        Save Change
+                    </button>
 
 
-    <button *ngIf="isPending()" (click)="this.sendActivateToken()"
-        class="flex-none rounded-md bg-primary-500 px-2 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-        Send Activate token
-    </button>
+                </div>
 
-    <button *ngIf="isActive()" (click)="this.deactivateUser()"
-        class="flex-none rounded-md bg-primary-500 px-2 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-        Deactivate User
-    </button>
+            </div>
+        </form>
 
-    <button *ngIf="isDisable()" (click)="this.deactivateUser()"
-        class="flex-none rounded-md bg-primary-500 px-2 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-        Enable User
-    </button>
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-night-500 dark:after:border-night-500">
+            <p class="mx-4 mb-0 text-center text-xs text-gray-400 dark:text-night-400">Peronal Information Update</p>
+        </div>
 
+        <form [formGroup]="personalInfoForm" (ngSubmit)="personalInfoChangeSubmit(personalInfoForm)">
+            <div class="flex items-center px-4 max-w-full space-x-2">
+                <div class="relative w-2/5 flex-col">
+                    <input type="text" id="firstName" class="peer block py-1" placeholder=" "
+                        formControlName="firstName" autocomplete="off" />
+                    <label for="firstName" class="input_text input_text_noautofil_shadow">FirstName</label>
+
+                    <div *ngIf="(personalInfoForm!.controls['firstName'].invalid && personalInfoForm!.controls['firstName'].touched)"
+                        class="input_text_error">
+                        <div *ngIf="personalInfoForm!.controls['firstName']?.errors?.['minlength']"> firstName minimum
+                            length is 5 </div>
+                        <div *ngIf="personalInfoForm!.controls['firstName']?.errors?.['required']"> firstName is
+                            required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative w-2/5 flex-col">
+                    <input type="text" id="lastName" class="peer block py-1" placeholder=" " formControlName="lastName"
+                        autocomplete="off" />
+                    <label for="lastName" class="input_text input_text_noautofil_shadow">Last Name</label>
+
+                    <div *ngIf="(personalInfoForm!.controls['lastName'].invalid && personalInfoForm!.controls['lastName'].touched)"
+                        class="input_text_error">
+                        <div *ngIf="personalInfoForm!.controls['lastName']?.errors?.['minlength']"> Last Name minimum
+                            length
+                            is 5 </div>
+                        <div *ngIf="personalInfoForm!.controls['lastName']?.errors?.['required']"> Lats Name is required
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="w-1/5 ">
+                    <button type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4 text-xs font-medium text-white float-right mr-2
+                    focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+                        Save Change
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-night-500 dark:after:border-night-500">
+            <p class="mx-4 mb-0 text-center text-xs text-gray-400 dark:text-night-400"> User Status </p>
+        </div>
+
+        <div class="flex items-center px-4 max-w-full space-x-4">
+            <div class="flex relative w-2/5 space-x-4">
+                <div class=" text-sm font-medium"> User Status: </div>
+                <div class=" text-sm"> {{this.user?.userStatus}} </div>
+            </div>
+            <div class="flex flex-row-reverse relative w-3/5 space-x-4 ">
+
+                <button *ngIf="isPending()" (click)="this.activateUser()" class="group relative rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                    focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+                    Activate User
+                </button>
+
+
+                <button *ngIf="isPending()" (click)="this.sendActivateToken()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                    focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+                    Send Activate token
+                </button>
+
+                <button *ngIf="isActive()" (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                    focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+                    Deactivate User
+                </button>
+
+                <button *ngIf="isDisable()" (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                    focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+                    Enable User
+                </button>
+
+            </div>
+        </div>
+
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-night-500 dark:after:border-night-500">
+            <p class="mx-4 mb-0 text-center text-xs text-gray-400 dark:text-night-400"> Reset Password Token</p>
+        </div>
+
+        <div class="flex flex-row-reverse px-4 max-w-full">
+           <button (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4 float-right mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                    focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+                    Send Token
+                </button>
+            
+        </div>
+
+
+
+    </div>
+
+
+
+    <app-popup-window></app-popup-window>
 </div>
-<div *ngIf="displayToken()" class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
-    <p class="font-bold">Activate Token is generated successfully</p>
-    <p class="text-sm">Token is ({{this.token}})</p>
-</div>
-
-  <app-popup-window></app-popup-window>
