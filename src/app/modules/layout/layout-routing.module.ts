@@ -5,11 +5,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
-  {
-    path: 'dashboard',
-    component: LayoutComponent,
-    loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardModule), 
-  },
+  
   {
     path: 'mydashboard',
     component: LayoutComponent,
@@ -20,7 +16,7 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () => import('../admin/admin.module').then((m) => m.AdminModule),  canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'mydashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'error/404' },
 ];
 

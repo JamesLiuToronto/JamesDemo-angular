@@ -104,7 +104,7 @@ private submitErrorHandler(error: any) {
 success() {
 
   this.popWindowService.openPopWindow("INFO", "User SignUp Successfully ", "Please check email to activate this singup user") ;
-  this.router.navigate(['/dashboard/nfts']);
+  this.router.navigate(['/mydashboard/my-dash']);
  
 }
 

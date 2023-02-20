@@ -6,17 +6,12 @@ export class Menu {
       group: 'Courses',
       separator: true,
       items: [
+        
         {
           icon: 'assets/icons/outline/chart-pie.svg',
           label: 'Dashboard',
-          route: '/dashboard',
-          children: [{ label: 'Nfts', route: '/dashboard/nfts' }],
-        },
-        {
-          icon: 'assets/icons/outline/chart-pie.svg',
-          label: 'My Books Dashboard',
           route: '/mydashboard',
-          children: [{ label: 'My Books Dashboard', route: '/mydashboard/my-dash' }],
+          children: [{ label: 'Books', route: '/mydashboard/my-dash' }],
         },
         // {
         //   icon: 'assets/icons/outline/lock-closed.svg',

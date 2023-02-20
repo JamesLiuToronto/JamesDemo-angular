@@ -68,7 +68,7 @@ export class SignInComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['/dashboard/nfts']);
+    this.router.navigate(['/mydashboard/my-dash']);
    
   }
 
