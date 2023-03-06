@@ -119,6 +119,10 @@ export class UserComponent implements OnInit {
   
       // console.log(error.error + " " + error.message);
     }
+
+    isLocalUserAccount(){
+      return this.user?.provider =="NULL" ;
+    }
   
     infoHandler(title: string, message:string) {
   

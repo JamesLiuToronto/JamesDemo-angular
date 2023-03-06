@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginForm, LoginResult} from '../model/Auth';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/service/env.service';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   result: boolean = false ;
   baseUrl: string ="url" ;
 
-  constructor(private http: HttpClient, private environment: EnvService) {
+  constructor(private http: HttpClient, private environment: EnvService, private httpUtility :HttpUtilityService) {
     this.baseUrl = this.environment.serverurl + "/account/login" ;
   }
 
@@ -31,6 +32,9 @@ export class AuthService {
     return this.http.post<LoginResult>(this.baseUrl,{ headers: headers }, { params: params });
   }
 
+  getLoginUser() : Observable<LoginResult>{
+    return this.http.get<LoginResult>(this.environment.serverurl  + "/api/login/login-user-info",{ headers: this.httpUtility.getHeader()});
+  }
  
 
   enableAuthenticated() {

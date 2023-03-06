@@ -6,4 +6,5 @@
     lastName: string;
     userStatus: string;
     roleList:string;
+    provider:string;
 }

@@ -27,7 +27,31 @@ export class SignInComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private routes: ActivatedRoute, private popWindowService: PopupWindowService) {
   }
   ngOnInit(): void {
+    const token = this.routes.snapshot.queryParamMap.get('token');
+	  const error = this.routes.snapshot.queryParamMap.get('error');
+    if (token){
+      localStorage.setItem('token', token);
+      this.getLoginUserInfoWithToken() ;
+    } else if(error){
+      this.errorHandlerMessage(this.title,error) ;
+      this.logout() ;
+  	}
+  }
 
+  getLoginUserInfoWithToken(){
+    this.authService.getLoginUser().
+    subscribe(u => {
+      this.loginAccount = u;
+      this.setLogin() ;
+      
+    }, (error: ErrorDTO) => {
+      this.errorHandler(this.title,error) ;
+      console.log("error happened2=" + JSON.stringify(error)) ;
+    });
+  }
+
+  loginWithGoogle(){
+    window.location.href = "http://localhost:9091/oauth2/authorization/google?redirect_uri=http://localhost:4200/auth/sign-in" ;
   }
 
   submit(){
@@ -41,13 +65,7 @@ export class SignInComponent implements OnInit {
       this.loginAccount = u;
       
       if (this.loginAccount != undefined){
-        localStorage.setItem('userId', this.loginAccount.userId.toString());
-        localStorage.setItem('token', this.loginAccount.token);
-        localStorage.setItem('account', JSON.stringify(this.loginAccount.account));
-        localStorage.setItem('roles', this.loginAccount.account.roleList);
-        console.log("token=" + localStorage.getItem('token'));
-        this.authService.enableAuthenticated();
-        this.goHome();
+        this.setLogin() ;
        
       } else {
         console.log("wrong path=" + encodeURI(JSON.stringify(this.loginAccount))) ;
@@ -58,6 +76,16 @@ export class SignInComponent implements OnInit {
       this.errorHandler(this.title,error) ;
       console.log("error happened2=" + JSON.stringify(error)) ;
     });
+  }
+
+  setLogin(){
+    localStorage.setItem('userId', this.loginAccount!.userId.toString());
+    localStorage.setItem('token', this.loginAccount!.token);
+    localStorage.setItem('account', JSON.stringify(this.loginAccount!.account));
+    localStorage.setItem('roles', this.loginAccount!.account.roleList);
+    console.log("token=" + localStorage.getItem('token'));
+    this.authService.enableAuthenticated();
+    this.goHome();
   }
 
   
@@ -83,6 +111,12 @@ export class SignInComponent implements OnInit {
   errorHandler(title: string, error: ErrorDTO) {
 
     this.popWindowService.openPopWindow("ERROR", title + " - Error - (" + error.status + ")", error.error) ;
+
+  }
+
+  errorHandlerMessage(title: string, error: string) {
+
+    this.popWindowService.openPopWindow("ERROR", title + " - Error - (401)", error) ;
 
   }
 

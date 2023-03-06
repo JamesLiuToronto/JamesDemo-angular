@@ -4,6 +4,7 @@ import { User } from '../model/User';
 import { delay, Observable } from 'rxjs';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 import { SimpleResultDTO } from 'src/app/shared/models/SimpleResultDTO';
+import { EnvService } from 'src/app/shared/service/env.service';
 
 
 @Injectable({
@@ -18,12 +19,13 @@ export class UsersService {
   private nextUserId: number = 0;
 
   userChangeEmitter = new EventEmitter() ;
+  private baseUrl:string = "url" ;
 
-  constructor( private http: HttpClient, private httpUtility :HttpUtilityService) {
-  
+  constructor( private http: HttpClient, private httpUtility :HttpUtilityService, private environment: EnvService) {
+    this.baseUrl = this.environment.serverurl ;
   }
  
-  private baseUrl:string = "http://localhost:9091" ;
+  
 
   raiseChangeUserEmitter(data :boolean){
     this.userChangeEmitter.emit(data) ;

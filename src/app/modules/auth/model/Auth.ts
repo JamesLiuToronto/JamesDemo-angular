@@ -8,6 +8,7 @@ export interface LoginResult {
   userId: number;
   token: string;
   account: AccountDTO;
+  
 }
 
 export interface AccountRegistrationDTO {
@@ -30,6 +31,7 @@ export interface AccountDTO {
   userStatus: string;
   note: string | undefined;
   roleList: string;
+  provider: string;
 }
 
 export interface PersonInfo {
