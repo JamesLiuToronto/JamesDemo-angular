@@ -27,14 +27,21 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="w-1/5 ">
-                    <button *ngIf="isLocalUserAccount()" type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
-                                py-2 px-4 float-right mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+                <div class="w-1/5 space-x-1 mr-2" *ngIf="isLocalUserAccount()">
+                    <div class="w-1/10 ">
+                        <button type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                                py-2 px-4 float-right text-xs font-medium text-white focus:outline-none focus:ring-2 
                                 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
-                        Save Change
-                    </button>
+                            Save </button>
+                    </div>
 
-
+                    <div class="w-1/10 ">
+                        <button type="button" (click)="this.undoEmailAddress()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                                py-2 px-4 float-right text-xs font-medium text-white focus:outline-none focus:ring-2 
+                                focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+                            Undo
+                        </button>
+                    </div>
                 </div>
 
             </div>
@@ -78,14 +85,23 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="w-1/5 ">
-                    <button type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
-                    py-2 px-4 text-xs font-medium text-white float-right mr-2
+                <div class="w-1/5 space-x-1 mr-2" *ngIf="isLocalUserAccount()">
+                    <div class="w-1/10 ">
+                        <button type="submit" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                    py-2 px-4 text-xs font-medium text-white float-right
                     focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
-                        Save Change
-                    </button>
+                            Save
+                        </button>
+                    </div>
+                    <div class="w-1/10 ">
+                        <button type="button" (click)="this.undoPersonInfo()" 
+                        class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+                            py-2 px-4 text-xs font-medium text-white float-right
+                            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+                            Undo
+                        </button>
+                    </div>
                 </div>
-
             </div>
         </form>
 
@@ -140,12 +156,12 @@
         </div>
 
         <div class="flex flex-row-reverse px-4 max-w-full">
-           <button (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+            <button (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
                     py-2 px-4 float-right mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
                     focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
-                    Send Token
-                </button>
-            
+                Send Token
+            </button>
+
         </div>
 
 

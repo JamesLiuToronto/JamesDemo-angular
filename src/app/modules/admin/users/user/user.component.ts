@@ -6,6 +6,7 @@ import { SimpleResultDTO } from 'src/app/shared/models/SimpleResultDTO';
 import { ErrorDTO } from 'src/app/shared/models/ErrorDTO';
 import { PopupWindowService } from 'src/app/shared/service/popup-window.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -15,7 +16,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private usersService: UsersService, private location: Location, 
+  constructor(private fb: FormBuilder, private usersService: UsersService, private userService: UserService, private location: Location, 
               private popWindowService: PopupWindowService) { }
   
   goBack() {
@@ -39,43 +40,50 @@ export class UserComponent implements OnInit {
       email: [this.user?.emailAddress, [Validators.required, Validators.minLength(5)]]
       }) ;
 
-      this.personalInfoForm = this.fb.group({
+    this.personalInfoForm = this.fb.group({
         firstName: [this.user?.firstName, [Validators.required]],
         lastName: [this.user?.lastName, [Validators.required]]
-      });
+    });
   }
 
   emailChangeSubmit(form: FormGroup) {
-    // this.signupService.signUp(this.map(form))
-    //   .subscribe(u => {
-    //     console.log("signup successful");
-    //     this.success();
-
-      
-      
-    // }, (error) => {
-    //   this.submitErrorHandler(error)
-    //   console.log("error happened=" + error);
-    // });
+     this.userService.updateEmail(this.user!, form.get('email')?.value)
+       .subscribe(u => {
+        this.popWindowService.openPopWindow("INFO", " Email Update Success" , " ") ;
+     }, (error) => {
+      this.errorHandler(" Email Update Failed" , error) ;
+     });
   }
-    personalInfoChangeSubmit(form: FormGroup) {
-      // this.signupService.signUp(this.map(form))
-      //   .subscribe(u => {
-      //     console.log("signup successful");
-      //     this.success();
+
+  undoEmailAddress(){
+    this.emailForm.setValue({
+      email: this.user?.emailAddress 
+    });
+  }
+
+  personalInfoChangeSubmit(form: FormGroup) {
+    this.userService.updatePersonInfo(this.user!, form.get('firstName')?.value, form.get('lastName')?.value)
+        .subscribe(u => {
+          this.popWindowService.openPopWindow("INFO", " PersonInfo Update Success" , " ") ;
   
         
         
-      // }, (error) => {
-      //   this.submitErrorHandler(error)
-      //   console.log("error happened=" + error);
-      // });  
+      }, (error) => {
+        this.errorHandler(" PersonInfo Update Failed" , error) ;
+      });  
   
+    }
+
+    undoPersonInfo(){
+      this.personalInfoForm.setValue({
+        firstName: this.user?.firstName,
+        lastName: this.user?.lastName
+      });
     }
 
     activateUser() {
       const title = "Activate User";
-      this.usersService.activateUser()
+      this.userService.activateUser(this.user!)
         .subscribe(u => {
           this.user = u;
           this.infoHandler("Activate User Successful", "User status is " + this.user.userStatus ) ;
@@ -86,7 +94,7 @@ export class UserComponent implements OnInit {
     deactivateUser() {
   
       const title = "Deactivate User";
-      this.usersService.deactivateUser("By Admin")
+      this.userService.deactivateUser(this.user!, "By Admin")
         .subscribe(u => {
           this.user = u;
           this.infoHandler("Deactivate User Successful", "User status is " + this.user.userStatus ) ;
@@ -97,7 +105,7 @@ export class UserComponent implements OnInit {
   
     sendActivateToken() {
       const title = "Send Activate Token ";
-      this.usersService.getActivateToken()
+      this.userService.getActivateToken(this.user!)
         .subscribe(u => {
           let result: SimpleResultDTO = u;
           this.token = result.note;
