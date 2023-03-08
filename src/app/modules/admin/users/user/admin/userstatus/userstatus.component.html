@@ -1,0 +1,39 @@
+<div class="flex items-center px-4 max-w-full space-x-4">
+    <div class="flex relative w-1/5 space-x-4">
+        <div class=" text-sm font-medium"> User Status: </div>
+        <div class=" text-sm"> {{this.user?.userStatus}} </div>
+    </div>
+    <div class="flex relative w-2/5 space-x-4">
+        <div class=" text-sm font-medium"> Provider: </div>
+        <div *ngIf="!isLocalUserAccount()" class=" text-sm"> {{this.user?.provider}} </div>
+        <div *ngIf="isLocalUserAccount()" class=" text-sm"> Local DB User Account </div>
+    </div>
+    <div class="flex flex-row-reverse relative w-2/5 space-x-4 ">
+
+        <button *ngIf="isPending()" (click)="this.activateUser()" class="group relative rounded-md border border-transparent bg-primary-500 
+            py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+            focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+            Activate User
+        </button>
+
+
+        <button *ngIf="isPending()" (click)="this.sendActivateToken()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+            py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+            focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+            Send Activate token
+        </button>
+
+        <button *ngIf="isActive()" (click)="this.deactivateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+            py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+            focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+            Deactivate User
+        </button>
+
+        <button *ngIf="isDisable()" (click)="this.activateUser()" class="group relative justify-center rounded-md border border-transparent bg-primary-500 
+            py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
+            focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400 ">
+            Enable User
+        </button>
+
+    </div>
+</div>

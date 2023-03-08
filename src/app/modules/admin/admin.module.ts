@@ -9,6 +9,10 @@ import { UsersComponent } from './users/users.component';
 import { UserComponent } from './users/user/user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
+import { EmailComponent } from './users/user/admin/email/email.component';
+import { UserinfoComponent } from './users/user/admin/userinfo/userinfo.component';
+import { UserstatusComponent } from './users/user/admin/userstatus/userstatus.component';
+import { UsertokenComponent } from './users/user/admin/usertoken/usertoken.component';
 
 
 
@@ -20,6 +24,10 @@ import { PopupWindowComponent } from 'src/app/shared/components/popup-window/pop
         RolesComponent,
         UsersComponent,
         UserComponent,
+        EmailComponent,
+        UserinfoComponent,
+        UserstatusComponent,
+        UsertokenComponent,
 
     ],
     imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]
