@@ -8,7 +8,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 @Component({
   selector: 'app-userinfo',
   templateUrl: './userinfo.component.html',
-  styleUrls: ['./userinfo.component.scss']
+  styleUrls: ['../../user-style.scss']
 })
 export class UserinfoComponent implements OnInit {
 
@@ -45,6 +45,10 @@ export class UserinfoComponent implements OnInit {
         firstName: this.user?.firstName,
         lastName: this.user?.lastName
       });
+    }
+
+    openInfo(){
+      this.httpUtilityService.openPopWindow("INFO", " PersonInfo Update Success" , " ") ;
     }
 
     isLocalUserAccount(){

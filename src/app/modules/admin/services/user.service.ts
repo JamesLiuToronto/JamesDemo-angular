@@ -60,5 +60,8 @@ export class UserService {
     return this.http.put<User>(url, JSON.parse(jsonString), { headers: this.httpUtility.getHeader() });
   }
 
-  
+  updateUserGroup(user:User, groupTypes:string) : Observable<User>{
+    let url = this.baseUrl + "/api/account/" + user.userId + "/usergroups?group-type-list=" + groupTypes ;
+    return this.http.post<User>(url, null, { headers: this.httpUtility.getHeader() });
+  }
 }

@@ -8,4 +8,5 @@ export class EnvService {
   constructor() { }
   public projectname = "James OutDemo";
   public serverurl = "url";
+  public googelurl = "url";
 }

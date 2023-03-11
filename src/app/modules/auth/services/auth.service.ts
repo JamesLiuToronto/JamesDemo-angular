@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { LoginForm, LoginResult} from '../model/Auth';
+import { AccountDTO, LoginForm, LoginResult} from '../model/Auth';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/service/env.service';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
@@ -37,13 +37,20 @@ export class AuthService {
   }
  
 
-  enableAuthenticated() {
+  enableAuthenticated(loginAccount: LoginResult) {
+    localStorage.setItem('userId', loginAccount!.userId.toString());
+    localStorage.setItem('token', loginAccount!.token);
+    localStorage.setItem('account', JSON.stringify(loginAccount!.account));
+    localStorage.setItem('roles', loginAccount!.account.roleList);
+    console.log("token=" + localStorage.getItem('token'));
     localStorage.setItem('isAuthenticated', 'true');
   }
 
   disableAuthenticated() {
     localStorage.setItem('isAuthenticated', 'false');
+    localStorage.setItem('userId', "");
   }
+
   isAuthenticated(){
     return localStorage.getItem('isAuthenticated')== "true";
   }
@@ -54,6 +61,14 @@ export class AuthService {
     localStorage.removeItem('userId');
     console.log("logout= " + this.isAuthenticated) ;
 
+  }
+
+  getGoogleUrl(){
+    return this.environment.googelurl ;
+  }
+
+  getLoginedInUserAccount() :AccountDTO {
+    return JSON.parse(localStorage.getItem('account')!) ;
   }
 
 

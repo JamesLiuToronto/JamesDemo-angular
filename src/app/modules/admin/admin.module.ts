@@ -13,6 +13,7 @@ import { EmailComponent } from './users/user/admin/email/email.component';
 import { UserinfoComponent } from './users/user/admin/userinfo/userinfo.component';
 import { UserstatusComponent } from './users/user/admin/userstatus/userstatus.component';
 import { UsertokenComponent } from './users/user/admin/usertoken/usertoken.component';
+import { UsergroupComponent } from './users/user/admin/usergroup/usergroup.component';
 
 
 
@@ -28,6 +29,7 @@ import { UsertokenComponent } from './users/user/admin/usertoken/usertoken.compo
         UserinfoComponent,
         UserstatusComponent,
         UsertokenComponent,
+        UsergroupComponent,
 
     ],
     imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]

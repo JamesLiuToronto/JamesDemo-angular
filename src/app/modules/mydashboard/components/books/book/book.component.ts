@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Book } from '../../../models/Book';
 import { CartService } from '../../../services/cart.service';
 
@@ -38,6 +38,10 @@ export class BookComponent implements OnInit {
   checkInCart(){
 
     return this.cartService.IsInCart(this.book.name);
+    
+  }
+
+  openInfo(){
     
   }
 

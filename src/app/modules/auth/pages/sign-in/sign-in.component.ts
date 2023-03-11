@@ -51,7 +51,8 @@ export class SignInComponent implements OnInit {
   }
 
   loginWithGoogle(){
-    window.location.href = "http://localhost:9091/oauth2/authorization/google?redirect_uri=http://localhost:4200/auth/sign-in" ;
+    //window.location.href = "http://localhost:9091/oauth2/authorization/google?redirect_uri=http://localhost:4200/auth/sign-in" ;
+    window.location.href = this.authService.getGoogleUrl() ;
   }
 
   submit(){
@@ -79,19 +80,13 @@ export class SignInComponent implements OnInit {
   }
 
   setLogin(){
-    localStorage.setItem('userId', this.loginAccount!.userId.toString());
-    localStorage.setItem('token', this.loginAccount!.token);
-    localStorage.setItem('account', JSON.stringify(this.loginAccount!.account));
-    localStorage.setItem('roles', this.loginAccount!.account.roleList);
-    console.log("token=" + localStorage.getItem('token'));
-    this.authService.enableAuthenticated();
+    this.authService.enableAuthenticated(this.loginAccount!);
     this.goHome();
   }
 
   
   logout() {
     this.authService.logoutService();
-    console.log("call logout service=" + this.authService.isAuthenticated)
     this.router.navigateByUrl('/auth/sing-in');
   }
 

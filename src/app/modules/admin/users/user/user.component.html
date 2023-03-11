@@ -1,4 +1,4 @@
-<div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row my-5 mx-5">
+<!-- <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row my-5 mx-5">
     <div class="text-center my-3 space-y-3">
         <h2 class="mb-1 text-3xl font-semibold text-gray-700 dark:text-white">
             User Adminitration <span class="text-primary-500">!</span>
@@ -34,6 +34,11 @@
 
         <app-usertoken></app-usertoken>
 
+        <div
+            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300 dark:before:border-night-500 dark:after:border-night-500">
+            <p class="mx-4 mb-0 text-center text-xs text-gray-400 dark:text-night-400"> User Roles</p>
+        </div>
+        <app-usergroup></app-usergroup>
 
 
     </div>
@@ -41,4 +46,31 @@
 
 
     <app-popup-window></app-popup-window>
-</div>
+</div> -->
+
+<div class="mx-auto px-4 py-4 sm:px-8 lg:container">
+    <div class="max-w-full grid sm:grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+        <div class="card w-3/7 bg-base-100 shadow-xl mx-2 my-2">
+            <app-email></app-email>
+        </div>
+
+        <div class="card w-3/7 bg-base-100 shadow-xl mx-2 my-2">
+            <app-userinfo></app-userinfo>
+        </div>
+
+        <div class="card w-3/7 bg-base-100 shadow-xl mx-2 my-2">
+            <div class="card-body">
+                <h2 class="card-title">Card title3!</h2>
+                <div class="divider"></div>
+                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-primary">Buy Now</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div> 
+
+<app-userinfo></app-userinfo>
