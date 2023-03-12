@@ -1,11 +1,11 @@
-<div class="card-body min-w-60">
+<div class="user_card_body_class">
 
     <div class="user_divider_class">
-        <p class="user_divider_title">Person Info Update</p>
+        <p class="user_divider_title">Person Info</p>
     </div>
     <form [formGroup]="personalInfoForm" (ngSubmit)="personalInfoChangeSubmit(personalInfoForm)">
-        <div class="flex-row">
-            <div class="relative  mb-2">
+        <div class="flex flex-row space-x-1 mb-2">
+            <div class="relative w-1/2">
                 <input type="text" id="firstName" class="peer block py-1" placeholder=" " formControlName="firstName"
                     autocomplete="off" />
                 <label for="firstName" class="input_text input_text_noautofil_shadow">FirstName</label>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class=" relative mb-4">
+            <div class=" relative w-1/2">
                 <input type="text" id="lastName" class="peer block py-1" placeholder=" " formControlName="lastName"
                     autocomplete="off" />
                 <label for="lastName" class="input_text input_text_noautofil_shadow">Last Name</label>

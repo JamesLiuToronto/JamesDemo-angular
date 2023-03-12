@@ -9,7 +9,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 @Component({
   selector: 'app-userstatus',
   templateUrl: './userstatus.component.html',
-  styleUrls: ['./userstatus.component.scss']
+  styleUrls: ['../../user-style.scss']
 })
 export class UserstatusComponent implements OnInit {
 

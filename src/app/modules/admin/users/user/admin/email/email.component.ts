@@ -30,6 +30,7 @@ export class EmailComponent implements OnInit {
     this.userService.updateEmail(this.user!, form.get('email')?.value)
       .subscribe(u => {
         this.httpUtilityService.openPopWindow("INFO", " Email Update Success", " ");
+        this.user!.emailAddress = form.get('email')?.value ;
       }, (error) => {
         this.httpUtilityService.errorHandler(" Email Update Failed ", error);
       });

@@ -31,7 +31,8 @@ export class UserinfoComponent implements OnInit {
     this.userService.updatePersonInfo(this.user!, form.get('firstName')?.value, form.get('lastName')?.value)
         .subscribe(u => {
           this.httpUtilityService.openPopWindow("INFO", " PersonInfo Update Success" , " ") ;
-  
+          this.user!.firstName = form.get('firstName')?.value ;
+          this.user!.lastName = form.get('lastName')?.value;
         
         
       }, (error) => {

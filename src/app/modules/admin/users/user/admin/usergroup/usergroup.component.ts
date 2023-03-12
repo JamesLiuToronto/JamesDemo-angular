@@ -8,7 +8,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 @Component({
   selector: 'app-usergroup',
   templateUrl: './usergroup.component.html',
-  styleUrls: ['./usergroup.component.scss']
+  styleUrls: ['../../user-style.scss']
 })
 export class UsergroupComponent implements OnInit {
 
@@ -37,6 +37,7 @@ export class UsergroupComponent implements OnInit {
     this.userService.updateUserGroup(this.user!, this.selected!.toString())
       .subscribe(u => {
         this.httpUtilityService.openPopWindow("INFO", " UserGroup Update Success", " ");
+        this.user!.roleList = this.selected!.toString() ;
       }, (error) => {
         this.httpUtilityService.errorHandler(" UserGroup Update Failed ", error);
       });

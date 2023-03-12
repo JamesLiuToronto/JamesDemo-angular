@@ -1,10 +1,10 @@
- <div class="card-body min-w-60">
+ <div class="user_card_body_class">
 
     <div class="user_divider_class">
-        <p class="user_divider_title">Email Address Update</p>
+        <p class="user_divider_title">Email Address</p>
     </div>
     <form [formGroup]="emailForm" (ngSubmit)="emailChangeSubmit(emailForm)">
-        <div class="relative  flex-row mb-4" >
+        <div class="relative  flex-row mb-2" >
             <input type="text" id="email" class="peer block py-1" placeholder=" " formControlName="email"
                 autocomplete="off" />
             <label for="email" class="input_text input_text_noautofil_shadow">Email address</label>
@@ -18,7 +18,7 @@
         </div>
 
         
-        <div *ngIf="isLocalUserAccount()" >
+        <div *ngIf="isLocalUserAccount()">
 
             <button type="submit" class="user_button">Save</button>
 

@@ -1,14 +1,18 @@
-<div class="flex items-center px-4 max-w-full space-x-4">
-    <div class="flex relative w-1/5 space-x-4">
+<div class="user_card_body_class">
+
+    <div class="user_divider_class">
+        <p class="user_divider_title">User Status</p>
+    </div>
+    <div class="flex relative space-x-2 ">
         <div class=" text-sm font-medium"> User Status: </div>
         <div class=" text-sm"> {{this.user?.userStatus}} </div>
     </div>
-    <div class="flex relative w-2/5 space-x-4">
+    <div class="flex relative space-x-2 mb-4">
         <div class=" text-sm font-medium"> Provider: </div>
         <div *ngIf="!isLocalUserAccount()" class=" text-sm"> {{this.user?.provider}} </div>
         <div *ngIf="isLocalUserAccount()" class=" text-sm"> Local DB User Account </div>
     </div>
-    <div class="flex flex-row-reverse relative w-2/5 space-x-4 ">
+    <div class="flex flex-row-reverse relative space-x-4 ">
 
         <button *ngIf="isPending()" (click)="this.activateUser()" class="group relative rounded-md border border-transparent bg-primary-500 
             py-2 px-4  mr-2 text-xs font-medium text-white focus:outline-none focus:ring-2 
@@ -36,4 +40,6 @@
         </button>
 
     </div>
+    <app-popup-window></app-popup-window>
 </div>
+
