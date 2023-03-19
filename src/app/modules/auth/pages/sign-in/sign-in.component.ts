@@ -53,6 +53,7 @@ export class SignInComponent implements OnInit {
   loginWithGoogle(){
     //window.location.href = "http://localhost:9091/oauth2/authorization/google?redirect_uri=http://localhost:4200/auth/sign-in" ;
     window.location.href = this.authService.getGoogleUrl() ;
+    console.log("window.location.href=" + window.location.href) ;
   }
 
   submit(){

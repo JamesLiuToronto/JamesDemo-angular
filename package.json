@@ -1,11 +1,11 @@
 {
-  "name": "angular-tailwind",
-  "version": "0.1.0",
-  "description": "Angular & Tailwind CSS Admin Dashboard Starter Kit, Free and Open Source",
-  "homepage": "https://github.com/luciano-work/angular-tailwind#readme",
+  "name": "james-demo",
+  "version": "1.0.1",
+  "description": "James Angular Demo",
+  "homepage": "http://localhost:4200",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luciano-work/angular-tailwind.git"
+    "url": "git+https://github.com/torontojaguar/james-demo.git"
   },
   "keywords": [
     "angular",
@@ -15,13 +15,13 @@
     "dark mode",
     "open source"
   ],
-  "author": "Luciano Oliveira <me@lanno.dev>",
+  "author": "Alan/James Liu",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration production",
     "test": "ng test",
     "prettier": "prettier --config ./.prettierrc --write \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",
     "prettier:verify": "prettier --config ./.prettierrc --check \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",

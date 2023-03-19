@@ -9,7 +9,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 @Component({
   selector: 'app-usertoken',
   templateUrl: './usertoken.component.html',
-  styleUrls: ['./usertoken.component.scss']
+  styleUrls: ['../../user-style.scss']
 })
 export class UsertokenComponent implements OnInit {
 
@@ -28,7 +28,7 @@ export class UsertokenComponent implements OnInit {
 
   sendResetPasswordToken() {
     const title = "Send reset Password Token ";
-    this.userService.getResetPasswordToken(this.user!)
+    this.userService.getResetPasswordToken(this.user!.emailAddress)
       .subscribe(u => {
         let result: SimpleResultDTO = u;
         this.token = result.note;

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   serverurl: "http://localhost:4200",
   projectname: "James dev Demo",
-  googleurl: "google"
+  googleurl: "google",
+  baseurl: "base"
 };
 
 /*

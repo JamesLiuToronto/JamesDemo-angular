@@ -39,8 +39,10 @@ export class UserService {
     return this.http.get<SimpleResultDTO>(this.baseUrl + "/api/login/activate-token/" + user.userId,{ headers: this.httpUtility.getHeader()});
   }
 
-  getResetPasswordToken(user:User) : Observable<SimpleResultDTO>{
-    return this.http.get<SimpleResultDTO>(this.baseUrl + "/api/login/reset-password-token/" + user.userId,{ headers: this.httpUtility.getHeader()});
+  getResetPasswordToken(emailAddress:String) : Observable<SimpleResultDTO>{
+
+    let url = this.baseUrl + "/process/reset-password?email=" + emailAddress +  "&baseurl=" + this.environment.baseurl ;
+    return this.http.post<SimpleResultDTO>(url, null );
   }
 
 

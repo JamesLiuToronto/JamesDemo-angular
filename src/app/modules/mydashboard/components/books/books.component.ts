@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 import { Book } from '../../models/Book';
 import { BooksService } from '../../services/books.service';
@@ -14,6 +14,10 @@ export class BooksComponent implements OnInit {
 
   totalBooksInCart : number = 0 ;
   isShowingBook:boolean = true ;
+  public getScreenWidth: any;
+  public getScreenHeight: any;
+
+
   constructor(private booksService: BooksService, private httpUtilityService: HttpUtilityService){}
 
   ngOnInit(): void {
@@ -24,6 +28,9 @@ export class BooksComponent implements OnInit {
           this.isShowingBook = flag ;
         }
       );
+
+      this.getScreenWidth = window.innerWidth;
+      this.getScreenHeight = window.innerHeight;  
   }
 
   listenCartNumberChanges(total: any){
@@ -35,5 +42,10 @@ export class BooksComponent implements OnInit {
   }
 
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.getScreenWidth = window.innerWidth;
+    this.getScreenHeight = window.innerHeight;
+  }
   
 }

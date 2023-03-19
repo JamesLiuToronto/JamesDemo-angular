@@ -4,6 +4,7 @@ import { AccountDTO, LoginForm, LoginResult} from '../model/Auth';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/service/env.service';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
+import { SimpleResultDTO } from 'src/app/shared/models/SimpleResultDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +14,30 @@ export class AuthService {
   loginErrorMessage: string = "Login failed, email password not match";
   errorMsg: string | undefined;
   result: boolean = false ;
-  baseUrl: string ="url" ;
-
+  
   constructor(private http: HttpClient, private environment: EnvService, private httpUtility :HttpUtilityService) {
-    this.baseUrl = this.environment.serverurl + "/account/login" ;
+  
   }
 
   login(form: LoginForm) : Observable<LoginResult>{
-    //let url: string = "http://localhost:9091/account/login";
-    console.log("url= " + this.baseUrl);
-    console.log("form.email= " + form.email);
+    let url: string = this.environment.serverurl + "/account/login" ;
+   
     let params = new HttpParams().
         append('username', form.email).
         append('password', form.password);
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set("Content-Type", "application/x-www-form-urlencoded");
-    return this.http.post<LoginResult>(this.baseUrl,{ headers: headers }, { params: params });
+    return this.http.post<LoginResult>(url,{ headers: headers }, { params: params });
   }
 
   getLoginUser() : Observable<LoginResult>{
     return this.http.get<LoginResult>(this.environment.serverurl  + "/api/login/login-user-info",{ headers: this.httpUtility.getHeader()});
+  }
+
+  changePassword(password:string, token:string) : Observable<SimpleResultDTO>{
+    let url =  this.environment.serverurl + "/account/registration/change-password-token?password=" + password + "&token=" + token ;
+    return this.http.post<SimpleResultDTO>(url, null);
   }
  
 
@@ -64,7 +68,8 @@ export class AuthService {
   }
 
   getGoogleUrl(){
-    return this.environment.googelurl ;
+    return this.environment.googleurl ;
+    
   }
 
   getLoginedInUserAccount() :AccountDTO {
