@@ -1,14 +1,24 @@
- <div class="user_card_body_class">
+<div class="user_card_body_class">
 
     <div class="user_divider_class">
-        <p class="user_divider_title">Email Address</p>
+        <p class="user_divider_title">Email and password</p>
     </div>
-    <form [formGroup]="emailForm" (ngSubmit)="emailChangeSubmit(emailForm)">
-        <div class="relative  flex-row mb-2" >
+    <form [formGroup]="emailForm" (ngSubmit)="emailChangeSubmit(emailForm)" class="grid grid-cols-5 gap-1">
+        <div class="relative col-span-3">
             <input type="text" id="email" class="peer block py-1" placeholder=" " formControlName="email"
                 autocomplete="off" />
             <label for="email" class="input_text input_text_noautofil_shadow">Email address</label>
+        </div>
 
+        <div *ngIf="isLocalUserAccount()" class="col-span-2">
+
+            <button type="submit" class="user_button">Save</button>
+
+            <button type="button" (click)="this.undoEmailAddress()" class="user_button">Undo</button>
+
+        </div>
+
+        <div class="col-span-3">
             <div *ngIf="(emailForm!.controls['email'].invalid && emailForm!.controls['email'].touched)"
                 class="input_text_error">
                 <div *ngIf="emailForm!.controls['email']?.errors?.['minlength']"> Email minimum length is 5
@@ -16,17 +26,10 @@
                 <div *ngIf="emailForm!.controls['email']?.errors?.['required']"> Email is required </div>
             </div>
         </div>
-
-        
-        <div *ngIf="isLocalUserAccount()">
-
-            <button type="submit" class="user_button">Save</button>
-
-            <button type="button" (click)="this.undoEmailAddress()" class="user_button">Undo</button>
-
-
+        <div class="col-span-2">
+            <app-usertoken></app-usertoken>
         </div>
     </form>
-    <app-popup-window></app-popup-window>
-</div> 
 
+    <app-popup-window></app-popup-window>
+</div>

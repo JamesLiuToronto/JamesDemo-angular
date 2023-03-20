@@ -30,7 +30,7 @@ export class Menu {
     },
     
     {
-      group: 'Admin',
+      group: 'Class Admin',
       separator: true,
       items: [
         {
@@ -40,12 +40,12 @@ export class Menu {
         },
         {
           icon: 'assets/icons/outline/gift.svg',
-          label: 'Roles',
+          label: 'some function',
           route: '/admin/roles',
         },
         {
           icon: 'assets/icons/outline/users.svg',
-          label: 'Users',
+          label: 'Other function',
           route: '/admin/users',
         },
       ],
@@ -65,26 +65,30 @@ export class Menu {
           route: '/gift',
         },
         {
-          icon: 'assets/icons/outline/folder.svg',
-          label: 'Profile',
-          route: '/profile',
-          children: [
-            { label: 'Change Password', route: '/profile/change-password' },
-            { label: 'Family Config', route: '/profile/download' },
-            { label: 'Others', route: '/profile/others' },
-          ],
+          icon: 'assets/icons/outline/cog.svg',
+          label: 'User Admin',
+          route: '/admin/users',
         },
         {
-          icon: 'assets/icons/outline/folder.svg',
-          label: 'Admin User',
-          route: '/admin-user',
+          icon: 'assets/icons/outline/family.svg',
+          label: 'Family Config',
+          route: '/admin/roles',
+        },
+        
+        {
+          icon: 'assets/icons/outline/lock-closed.svg',
+          label: 'Auth',
+          route: '/auth',
           children: [
-            { label: 'User Management', route: '/admin/current-files' },
-            { label: 'Family Config', route: '/admin/download' },
-            { label: 'Others', route: '/admin/others' },
+            { label: 'Sign up', route: '/auth/sign-up' },
+            { label: 'Sign in', route: '/auth/sign-in' },
+            { label: 'Forgot Password', route: '/auth/forgot-password' },
+            { label: 'New Password', route: '/auth/new-password' },
+            { label: 'Two Steps', route: '/auth/two-steps' },
           ],
         },
       ],
     },
+    
   ];
 }

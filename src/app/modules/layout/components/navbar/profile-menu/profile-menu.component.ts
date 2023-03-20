@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/modules/admin/services/users.service';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 
 @Component({
   selector: 'app-profile-menu',
@@ -10,7 +12,8 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
 export class ProfileMenuComponent implements OnInit {
   public isMenuOpen = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private usersService:UsersService,
+    private httpUtilityService: HttpUtilityService ) {}
 
   ngOnInit(): void {}
 
@@ -26,5 +29,20 @@ export class ProfileMenuComponent implements OnInit {
 
   isAuthenticated(){
     return this.authService.isAuthenticated() ;
+  }
+
+  getUser(){
+    let login = this.authService.getLoginedInUserAccount() ;
+    this.getUserById(login.userId);
+  }
+ 
+
+  getUserById(userAccountId:number) {
+    this.usersService.getUserById(userAccountId)
+      .subscribe(u => {
+        this.usersService.setSelectedUser(u) ;
+        this.router.navigate(['//admin/user']);
+      }, (error) =>  this.httpUtilityService.errorHandler("Retrieve User Failed by Id-" + userAccountId , error), ()=>{
+      });
   }
 }

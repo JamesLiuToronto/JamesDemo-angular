@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BottomNavbarComponent } from './components/bottom-navbar/bottom-navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -32,6 +33,6 @@ import { LayoutComponent } from './layout.component';
     NavbarMobileMenuComponent,
     NavbarMobileSubmenuComponent,
   ],
-  imports: [CommonModule, LayoutRoutingModule, AngularSvgIconModule.forRoot(), SharedModule],
+  imports: [CommonModule, LayoutRoutingModule, AngularSvgIconModule.forRoot(), SharedModule, PopupWindowComponent],
 })
 export class LayoutModule {}
