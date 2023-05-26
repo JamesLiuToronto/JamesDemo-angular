@@ -35,11 +35,14 @@ export class UsergroupComponent implements OnInit {
 
   save() {
     this.userService.updateUserGroup(this.user!, this.selected!.toString())
-      .subscribe(u => {
-        this.httpUtilityService.openPopWindow("INFO", " UserGroup Update Success", " ");
-        this.user!.roleList = this.selected!.toString() ;
-      }, (error) => {
-        this.httpUtilityService.errorHandler(" UserGroup Update Failed ", error);
+      .subscribe({
+        next: u => {
+          this.httpUtilityService.openPopWindow("INFO", " UserGroup Update Success", " ");
+          this.user!.roleList = this.selected!.toString() ;
+        }, 
+        error: (error) => {
+          this.httpUtilityService.errorHandler(" UserGroup Update Failed ", error);
+        }
       });
   }
 

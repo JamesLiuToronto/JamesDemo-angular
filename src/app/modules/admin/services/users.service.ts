@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { User } from '../model/User';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 import { EnvService } from 'src/app/shared/service/env.service';
 
@@ -26,11 +26,20 @@ export class UsersService {
  
 
   getUserList() : Observable<User[]>{
-    return this.http.get<User[]>(this.baseUrl + "/api/account",{ headers: this.httpUtility.getHeader()});
+    return this.http.get<User[]>(this.baseUrl + "/api/account",{ headers: this.httpUtility.getHeader()}).pipe(shareReplay());
+  }
+
+  getUserListWithSortOnly(sortField:string, direction:number ) : Observable<User[]>{
+    return this.http.get<User[]>(this.baseUrl + "/api/account/0/sort/" + sortField + "/" + direction,{ headers: this.httpUtility.getHeader()}).pipe(shareReplay());
+  }
+
+  getUserListWithPagenition(sortField:string, direction:number, offset:number, pageSize:number ) : Observable<User[]>{
+    return this.http.get<User[]>(this.baseUrl + "/api/account/0/page/" + sortField + "/" + direction + "/" + offset + "/" + pageSize,
+                                { headers: this.httpUtility.getHeader()}).pipe(shareReplay());
   }
 
   getUserById(userAccountId:number) : Observable<User>{
-    return this.http.get<User>(this.baseUrl + "/api/account/" + userAccountId,{ headers: this.httpUtility.getHeader()});
+    return this.http.get<User>(this.baseUrl + "/api/account/" + userAccountId,{ headers: this.httpUtility.getHeader()}).pipe(shareReplay());
   }
   
   setSelectedUser(user :User){

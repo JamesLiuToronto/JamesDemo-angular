@@ -13,7 +13,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 })
 export class UsertokenComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private usersService: UsersService, private userService: UserService, 
+  constructor(private fb: FormBuilder, private usersService: UsersService, private userService: UserService,
     private httpUtilityService: HttpUtilityService) { }
 
   user: User | undefined;
@@ -21,28 +21,33 @@ export class UsertokenComponent implements OnInit {
   token: string | undefined;
 
   ngOnInit(): void {
-    this.user = this.usersService.getSelectedUser() ;
+    this.user = this.usersService.getSelectedUser();
   }
 
-  
+
 
   sendResetPasswordToken() {
     const title = "Send reset Password Token ";
     this.userService.getResetPasswordToken(this.user!.emailAddress)
-      .subscribe(u => {
-        let result: SimpleResultDTO = u;
-        this.token = result.note;
-        this.toeknDisplay = true;
-        this.httpUtilityService.openPopWindow("INFO", "Reset Password Token is generated Successful", "token: " + this.token ) ;
-      }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
-        console.log("Reset Password Token finish=");
+      .subscribe({
+        next: u => {
+          let result: SimpleResultDTO = u;
+          this.token = result.note;
+          this.toeknDisplay = true;
+          this.httpUtilityService.openPopWindow("INFO", "Reset Password Token is generated Successful", "token: " + this.token);
+        },
+        error: (error) => {
+          this.httpUtilityService.errorHandler(title, error), () => {
+            console.log("Reset Password Token finish=");
+          }
+        }
       });
   }
 
-  
 
-  isLocalUserAccount(){
-    return this.user?.provider =="NULL" ;
+
+  isLocalUserAccount() {
+    return this.user?.provider == "NULL";
   }
 
   isPending() {

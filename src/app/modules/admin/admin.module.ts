@@ -14,6 +14,7 @@ import { UserinfoComponent } from './users/user/admin/userinfo/userinfo.componen
 import { UserstatusComponent } from './users/user/admin/userstatus/userstatus.component';
 import { UsertokenComponent } from './users/user/admin/usertoken/usertoken.component';
 import { UsergroupComponent } from './users/user/admin/usergroup/usergroup.component';
+import { ReferenceComponent } from './reference/reference.component';
 
 
 
@@ -30,6 +31,7 @@ import { UsergroupComponent } from './users/user/admin/usergroup/usergroup.compo
         UserstatusComponent,
         UsertokenComponent,
         UsergroupComponent,
+        ReferenceComponent,
 
     ],
     imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent,]

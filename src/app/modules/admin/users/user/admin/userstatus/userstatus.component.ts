@@ -13,7 +13,7 @@ import { HttpUtilityService } from 'src/app/shared/service/http-utility.service'
 })
 export class UserstatusComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private usersService: UsersService, private userService: UserService, 
+  constructor(private fb: FormBuilder, private usersService: UsersService, private userService: UserService,
     private httpUtilityService: HttpUtilityService) { }
 
   user: User | undefined;
@@ -21,17 +21,23 @@ export class UserstatusComponent implements OnInit {
   token: string | undefined;
 
   ngOnInit(): void {
-    this.user = this.usersService.getSelectedUser() ;
+    this.user = this.usersService.getSelectedUser();
   }
 
   activateUser() {
     const title = "Activate User";
     this.userService.activateUser(this.user!)
-      .subscribe(u => {
-        this.user = u;
-        this.httpUtilityService.openPopWindow("INFO","Activate User Successful", "User status is " + this.user.userStatus ) ;
-      }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
-        console.log("activate User finish=");
+      .subscribe({
+        next: u => {
+          this.user = u;
+          this.httpUtilityService.openPopWindow("INFO", "Activate User Successful", "User status is " + this.user.userStatus);
+        },
+        error: (error) => {
+          this.httpUtilityService.errorHandler(title, error),
+          () => {
+            console.log("activate User finish=");
+          }
+        }
       });
   }
   deactivateUser() {
@@ -40,7 +46,7 @@ export class UserstatusComponent implements OnInit {
     this.userService.deactivateUser(this.user!, "By Admin")
       .subscribe(u => {
         this.user = u;
-        this.httpUtilityService.openPopWindow( "INFO", "Deactivate User Successful", "User status is " + this.user.userStatus ) ;
+        this.httpUtilityService.openPopWindow("INFO", "Deactivate User Successful", "User status is " + this.user.userStatus);
       }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
         console.log("deactivate User finish=");
       });
@@ -53,16 +59,16 @@ export class UserstatusComponent implements OnInit {
         let result: SimpleResultDTO = u;
         this.token = result.note;
         this.toeknDisplay = true;
-        this.httpUtilityService.openPopWindow("INFO", "Activate Token is generated Successful", "token: " + this.token ) ;
+        this.httpUtilityService.openPopWindow("INFO", "Activate Token is generated Successful", "token: " + this.token);
       }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
         console.log("deactivate User finish=");
       });
   }
 
-  
 
-  isLocalUserAccount(){
-    return this.user?.provider =="NULL" ;
+
+  isLocalUserAccount() {
+    return this.user?.provider == "NULL";
   }
 
   isPending() {

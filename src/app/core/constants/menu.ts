@@ -72,7 +72,7 @@ export class Menu {
         {
           icon: 'assets/icons/outline/family.svg',
           label: 'Family Config',
-          route: '/admin/roles',
+          route: '/admin/family',
         },
         
         {

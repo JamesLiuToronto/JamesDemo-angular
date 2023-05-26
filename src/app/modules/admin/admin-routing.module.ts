@@ -14,8 +14,9 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'download', component: DownloadComponent, data: { returnUrl: window.location.pathname } },
+      { path: 'family', component: UsersComponent, data: { type: 'family' }} ,
       { path: 'roles', component: RolesComponent },
-      { path: 'users', component: UsersComponent,},
+      { path: 'users', component: UsersComponent, data: { type: 'users' }},
       { path: 'user', component: UserComponent,},
     ],
   },
