@@ -5,6 +5,8 @@ import { LoadingService } from 'src/app/shared/service/loading.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { User } from '../model/User';
 import { UsersService } from '../services/users.service';
+import { Pager } from './pagnition/pagnition.component';
+import { PageService } from 'src/app/shared/service/page.service';
 
 
 
@@ -16,26 +18,28 @@ import { UsersService } from '../services/users.service';
 export class UsersComponent implements OnInit {
 
   users: User[] = [];
+  userContent:string | undefined ;
   lastRetrieveTime: Date | undefined;
   loading$ = this.loader.loading$;
   title: string = "Retrieve User List";
-  isFamilyPage: boolean = false;
-  readonly familyPage = "family";
 
-  sortField: string = 'NA';
+  pageResult: Pager | undefined;
+
+  sortField: string = 'emailAddress';
   sortOrder = 1;
-  pagenaition = false;
+  pagenaition = true;
 
-  pager?: Pager;
-  @Output() changePage = new EventEmitter<any>(true);
-  @Input() initialPage = 1;
-  @Input() pageSize = 5;
-  @Input() maxPages = 10;
+  intiPageNumber = 0 ;
+  initPageSize = 5 ;
 
+  pageNumber = this.intiPageNumber ;
+  pageSize = this.initPageSize ;
 
   constructor(public loader: LoadingService, private usersService: UsersService,
     private router: Router, private httpUtilityService: HttpUtilityService,
-    private authService: AuthService, private _Activatedroute: ActivatedRoute) {
+    private authService: AuthService, private _Activatedroute: ActivatedRoute,
+    private pageService: PageService) {
+      
   }
   ngOnInit(): void {
 
@@ -47,23 +51,27 @@ export class UsersComponent implements OnInit {
     this._Activatedroute.data.subscribe(params => {
       console.log(params);
       let type = params['type'];
-      if (type == this.familyPage) {
-        this.isFamilyPage = true
-      }
+
     })
 
 
   }
 
-  getUserList() {
+  isAdmin() {
     let account = this.authService.getLoginedInUserAccount();
     if (account.roleList.includes("ADMIN")) {
-      this.getUsers();
+      return true;
     } else {
-      this.getUserById(account.userId);
+      return false;
+    }
+  }
+
+  getUserList() {
+    if (this.isAdmin()) {
+      this.getUsers();
     }
 
-
+    this.getUserById(this.authService.getLoginedInUserAccount().userId);
   }
 
   getUserById(userAccountId: number) {
@@ -82,19 +90,11 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  getUsers() {
-    if (this.sortField == "NA"){
-      this.getAllUsers();
-    } else {
-      this.getAllUsersWithSort() ;
-    }
-  }
-
-  private getAllUsers() {
-    this.usersService.getUserList()
+  private getUsers() {
+    this.usersService.getUserListWithPagenition(this.sortField, this.sortOrder, this.pageNumber, this.pageSize)
       .subscribe({
         next: u => {
-          this.users = u;
+          this.setPage(u) ;
           console.log("this users", this.users);
           console.log("loading flag =" + this.loading$);
           this.lastRetrieveTime = new Date();
@@ -108,28 +108,30 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  private getAllUsersWithSort() {
-    this.usersService.getUserListWithSortOnly(this.sortField, this.sortOrder)
-      .subscribe({
-        next: u => {
-          this.users = u;
-          console.log("this users", this.users);
-          console.log("loading flag =" + this.loading$);
-          this.lastRetrieveTime = new Date();
-        },
-        error: (error) => {
-          this.httpUtilityService.errorHandler("Retrieve User List Failed", error);
-        },
-        complete: () => {
-          console.log("loading flag finish=" + this.loading$);
-        }
-      });
+  setPage(u:any){
+    this.userContent = this.pageService.setPage(u) ;
+    this.users = JSON.parse(this.userContent) ;
   }
-
-
+  
   viewUser(index: number) {
     this.usersService.setSelectedUser(this.users[index]);
     this.router.navigateByUrl('/admin/user');
+  }
+
+  processPageResult(u: any) {
+    this.pageResult = u;
+
+  }
+
+  onChangePageSize(size: number) {
+    this.pageSize = size ;
+    this.pageNumber = this.intiPageNumber ;
+    this.getUsers() ;
+  }
+
+  onChangePage(pageNumber: number) {
+    this.pageNumber = pageNumber ;
+    this.getUsers() ;
   }
 
 
@@ -148,18 +150,7 @@ export class UsersComponent implements OnInit {
     return '';
   }
 
-  
+
 
 }
 
-export interface Pager {
-  totalItems: number;
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-  startPage: number;
-  endPage: number;
-  startIndex: number;
-  endIndex: number;
-  pages: number[];
-}

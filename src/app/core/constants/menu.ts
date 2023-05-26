@@ -65,6 +65,11 @@ export class Menu {
           route: '/gift',
         },
         {
+          icon: 'assets/icons/outline/bell.svg',
+          label: 'Reference',
+          route: '/admin/reference',
+        },
+        {
           icon: 'assets/icons/outline/cog.svg',
           label: 'User Admin',
           route: '/admin/users',

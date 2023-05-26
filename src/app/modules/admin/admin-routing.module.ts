@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DownloadComponent } from './download/download.component';
-import { RolesComponent } from './roles/roles.component';
 import { UserComponent } from './users/user/user.component';
 import { UsersComponent } from './users/users.component';
+import { ReferenceComponent } from './reference/reference.component';
 
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'download', component: DownloadComponent, data: { returnUrl: window.location.pathname } },
       { path: 'family', component: UsersComponent, data: { type: 'family' }} ,
-      { path: 'roles', component: RolesComponent },
+      { path: 'reference', component: ReferenceComponent },
       { path: 'users', component: UsersComponent, data: { type: 'users' }},
       { path: 'user', component: UserComponent,},
     ],

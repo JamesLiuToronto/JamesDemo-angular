@@ -5,36 +5,8 @@
 
 </div>
 
-<div class="mx-auto px-3 py-4 sm:px-3 lg:container" *ngIf="this.isFamilyPage">
-    <div class="flex rounded-lg bg-white px-4 py-4 space-x-6 dark:bg-night-700 sm:flex-row">
-        <div class="mb-4 mx-10 flex items-center justify-between">
-            <select id="countries"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Choose a User Account</option>
-                <option *ngFor="let user of users ;let indexOfelement=index;"
-                            class="border-b border-dashed border-gray-200 dark:border-night-500 hover:bg-slate-200"
-                            value={{user.userId}}>
-                       {{user.emailAddress}} - {{user.firstName }}, {{user.lastName}}
-                </option>                            
 
-            </select>
-        </div>
-        <div class="mb-4 flex items-center justify-between">
-            <button (click)="this.getUserList()"
-                    class="flex-none rounded-md bg-primary-500 px-4 py-2.5 text-xs font-semibold hover:bg-primary-200 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500">
-                    Refresh
-                </button>
-        </div>
-
-
-    </div>
-
-
-
-</div>
-
-
-<div class="mx-auto px-3 py-4 sm:px-3 lg:container" *ngIf="!this.isFamilyPage">
+<div class="mx-auto px-3 py-4 sm:px-3 lg:container" >
 
     <!-- Auctions Table -->
     <div class="sm:col-span-1 md:col-span-2 xl:col-span-3">
@@ -52,28 +24,14 @@
                 </button>
             </div>
 
+            <div class="card-footer pb-0 pt-3" *ngIf="!this.isAdmin()">
+                <app-pagnition [items]="users" (changePage)="onChangePage($event)"></app-pagnition>
+            </div>
+
             <div class="users_divider_class">
                 <p class="users_divider_title">Registered Users</p>
             </div>
-
-            <ul *ngIf="pager && pager.pages?.length" class="pagination justify-content-center">
-                <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
-                    <a (click)="setPage(1)" class="page-link">First</a>
-                </li>
-                <li [ngClass]="{ disabled: pager.currentPage === 1 }" class="page-item">
-                    <a (click)="setPage(pager.currentPage - 1)" class="page-link">Previous</a>
-                </li>
-                <li *ngFor="let page of pager.pages" [ngClass]="{ active: pager.currentPage === page }" class="page-item">
-                    <a (click)="setPage(page)" class="page-link">{{page}}</a>
-                </li>
-                <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
-                    <a (click)="setPage(pager.currentPage + 1)" class="page-link">Next</a>
-                </li>
-                <li [ngClass]="{ disabled: pager.currentPage === pager.totalPages }" class="page-item">
-                    <a (click)="setPage(pager.totalPages)" class="page-link">Last</a>
-                </li>
-            </ul>
-
+            
             <div class="overflow-x-auto">
                 <table class="w-full table-auto">
                     <!--Table head-->
@@ -122,6 +80,7 @@
                     </tbody>
                     <!--end::Table body-->
                 </table>
+                
             </div>
         </div>
     </div>

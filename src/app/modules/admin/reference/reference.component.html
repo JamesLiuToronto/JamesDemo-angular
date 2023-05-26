@@ -1,1 +1,63 @@
-<p>reference works!</p>
+<div class="flex flex-col items-center justify-center mt-4" *ngIf="loading$ | async">
+    <div style="border-top-color:transparent"
+        class="w-12 h-12 border-4 border-blue-600 border-dashed rounded-full animate-spin mt-4"></div>
+    <div class="mt-4 text-md font-bold text-green-900">Loading ...</div>
+
+</div>
+
+
+<div class="mx-auto px-3 py-4 sm:px-3 lg:container">
+    <app-reference-type></app-reference-type>
+    <!-- Auctions Table -->
+    <div class="sm:col-span-1 md:col-span-2 xl:col-span-3" *ngIf="this.isReferenceDisplay()">
+
+        <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
+                        
+            <div class="overflow-x-auto">
+                <table class="w-full table-auto">
+                    <!--Table head-->
+                    <thead class="text-xs uppercase text-gray-400 dark:text-night-100">
+                        <tr>
+                            <th class="py-3 text-left"> Type </th>
+                            <th class="py-3 text-left"><a (click)="sortBy('code')">Code {{sortIcon('code')}}</a></th>
+                            <th class="py-3 text-left"><a (click)="sortBy('name')">Name {{sortIcon('name')}} </a></th>
+                            <th class="py-3 text-right">View</th>
+
+                        </tr>
+                    </thead>
+                    <!--end Table head-->
+                    <!--Table body-->
+                    <tbody>
+                        <tr *ngFor="let reference of references ;let indexOfelement=index;"
+                            class="border-b border-dashed border-gray-200 dark:border-night-500 hover:bg-slate-200">
+
+                            <td
+                                class="px-1 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-night-100">
+                                {{
+                                    reference.type }} </td>
+                            <td
+                                class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">
+                                {{
+                                    reference.code }} </td>
+                            <td
+                                class="text-sm text-gray-900 font-light p2-6 py-1 whitespace-nowrap dark:text-night-100">
+                                {{
+                                    reference.name }}</td>
+                            
+                            <td class="py-2 pl-2 text-right">
+                                <div class="flex justify-end">
+                                    <button (click)="this.viewReference(indexOfelement)" href="#"
+                                        class="flex h-7 w-7 items-center justify-center rounded-md bg-gray-200 text-gray-400 dark:bg-night-500 dark:text-night-300">
+                                        <svg-icon src="assets/icons/outline/arrow-sm-right.svg" [svgClass]="'h-5 w-5'">
+                                        </svg-icon>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!--end::Table body-->
+                </table>
+            </div>
+        </div>
+    </div>
+    <app-popup-window></app-popup-window>
