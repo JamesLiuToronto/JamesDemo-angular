@@ -19,7 +19,7 @@ export class PopupWindowComponent {
   title(){
    return this.popWindowService.title ;
  }
- 
+
  message(){
   return this.popWindowService.message ;
  }

@@ -1,0 +1,40 @@
+<div class="flex ">
+    <div class=" mr-10 text-gray-600 dark:text-night-100">
+        <small class="font-semibold">Showing:</small>
+        <small class="font-normal"> {{this.getFirstElementOnPage() + 1}}</small>
+        <small class="font-semibold"> to </small>
+        <small class="font-normal">{{this.getLastElementOnPage()! + 1}}</small>
+        <small class="font-semibold"> of </small> 
+        <small class="font-normal">{{this.getTotalElements()}}</small>
+        <small class="font-semibold"> Total Records </small> 
+        
+    </div>
+    <div>
+        <ul *ngIf="this.isPageable()" class="inline-flex -space-x-px text-xs">
+            <li class="page-item">
+                <a (click)="setPage(0)" class="page_link_previous">First</a>
+            </li>
+            <li class="page-item">
+                <a (click)="setPage(this.getPreviousPageNumber()!)" class="page_link_middle">Previous</a>
+            </li>
+            <li  class="page-item">
+                <a (click)="setPage(this.getLeftManyPageNumber())" class="page_link_middle">.....</a>
+            </li>
+            <li *ngFor="let page of items" [ngClass]="{ active: this.getLastPageNumber() === page }" class="page-item">
+                <a (click)="setPage(page-1) " *ngIf="this.isCurrentPageNumber(page-1)" class="page_link_middle font-semibold">{{page}}</a>
+                <a (click)="setPage(page-1) " *ngIf="!this.isCurrentPageNumber(page-1)" class="page_link_middle">{{page}}</a>
+            </li>
+        
+            <li class="page-item">
+                <a (click)="setPage(this.getRightManyPageNumber())" class="page_link_middle">.....</a>
+            </li>
+        
+            <li  class="page-item">
+                <a (click)="setPage(this.getNextPageNumber())" class="page_link_middle">Next</a>
+            </li>
+            <li class="page-item">
+                <a (click)="setPage(this.getLastPageNumber())" class="page_link_next">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>

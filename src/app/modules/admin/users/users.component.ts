@@ -5,10 +5,8 @@ import { LoadingService } from 'src/app/shared/service/loading.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { User } from '../model/User';
 import { UsersService } from '../services/users.service';
-import { Pager } from './pagnition/pagnition.component';
 import { PageService } from 'src/app/shared/service/page.service';
-
-
+import { Pager } from 'src/app/shared/dto/Pager';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +16,6 @@ import { PageService } from 'src/app/shared/service/page.service';
 export class UsersComponent implements OnInit {
 
   users: User[] = [];
-  userContent:string | undefined ;
   lastRetrieveTime: Date | undefined;
   loading$ = this.loader.loading$;
   title: string = "Retrieve User List";
@@ -27,13 +24,13 @@ export class UsersComponent implements OnInit {
 
   sortField: string = 'emailAddress';
   sortOrder = 1;
-  pagenaition = true;
+  paginaition = true;
 
-  intiPageNumber = 0 ;
-  initPageSize = 5 ;
+  pageSizes = [2, 5, 10, 20, 50];
+  pageNumber = 0 ;
+  pageSize = this.pageSizes[0] ;
+ 
 
-  pageNumber = this.intiPageNumber ;
-  pageSize = this.initPageSize ;
 
   constructor(public loader: LoadingService, private usersService: UsersService,
     private router: Router, private httpUtilityService: HttpUtilityService,
@@ -42,6 +39,15 @@ export class UsersComponent implements OnInit {
       
   }
   ngOnInit(): void {
+
+    this.pageService.pageChangeEvent
+      .subscribe(
+        (page: number) => {
+          this.pageNumber = page ;
+          this.getUserList();
+          return ;
+        }
+      );
 
     if (this.users.length == 0) {
       this.getUserList();
@@ -53,6 +59,8 @@ export class UsersComponent implements OnInit {
       let type = params['type'];
 
     })
+
+
 
 
   }
@@ -96,8 +104,10 @@ export class UsersComponent implements OnInit {
         next: u => {
           this.setPage(u) ;
           console.log("this users", this.users);
-          console.log("loading flag =" + this.loading$);
+          console.log("pageSize =" + this.pageSize);
+          console.log("pageNumber =" + this.pageNumber);
           this.lastRetrieveTime = new Date();
+          this.pageService.dataChangeEvent.emit(true);
         },
         error: (error) => {
           this.httpUtilityService.errorHandler("Retrieve User List Failed", error);
@@ -109,9 +119,11 @@ export class UsersComponent implements OnInit {
   }
 
   setPage(u:any){
-    this.userContent = this.pageService.setPage(u) ;
-    this.users = JSON.parse(this.userContent) ;
+    this.users = this.pageService.setPage(u) ;
+
   }
+
+
   
   viewUser(index: number) {
     this.usersService.setSelectedUser(this.users[index]);
@@ -123,9 +135,10 @@ export class UsersComponent implements OnInit {
 
   }
 
-  onChangePageSize(size: number) {
-    this.pageSize = size ;
-    this.pageNumber = this.intiPageNumber ;
+  onChangePageSize(event: any) {
+
+    this.pageSize = event.target.value ;
+    this.pageNumber = 0 ;
     this.getUsers() ;
   }
 

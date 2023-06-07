@@ -1,12 +1,12 @@
 export interface Pager {
-    content: string;
+    content: any[];
+    sort:PageableSort;
     pageable: Pageable;
     last: boolean;
     totalElements: number;
     totalPages: number;
     size: number;
     number: number;
-    sort: string;
     first: boolean;
     numberOfElements: number;
     empty: boolean;
@@ -22,7 +22,7 @@ export interface Pageable {
 }
 
 export interface PageableSort {
-    empty: boolean;
     sorted: boolean;
-    unsorted: boolean;
+    sortField: string;
+    sortDesc:boolean;
 }

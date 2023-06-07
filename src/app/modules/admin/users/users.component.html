@@ -6,7 +6,7 @@
 </div>
 
 
-<div class="mx-auto px-3 py-4 sm:px-3 lg:container" >
+<div class="mx-auto px-3 py-4 sm:px-3 lg:container">
 
     <!-- Auctions Table -->
     <div class="sm:col-span-1 md:col-span-2 xl:col-span-3">
@@ -14,7 +14,7 @@
         <div class="flex-col rounded-lg bg-white px-8 py-8 dark:bg-night-700 sm:flex-row">
             <div class="mb-4 flex items-center justify-between">
                 <div class="flex-col items-center">
-                    
+
                     <span class="text-xs text-gray-400 dark:text-night-300">Last Retrieve Time:
                         {{lastRetrieveTime}}</span>
                 </div>
@@ -23,24 +23,27 @@
                     Refresh
                 </button>
             </div>
-
-            <div class="card-footer pb-0 pt-3" *ngIf="!this.isAdmin()">
-                <app-pagnition [items]="users" (changePage)="onChangePage($event)"></app-pagnition>
+            <div class="card-footer" *ngIf="this.isAdmin()">
+                <app-pagination></app-pagination>
             </div>
 
             <div class="users_divider_class">
                 <p class="users_divider_title">Registered Users</p>
             </div>
-            
+
             <div class="overflow-x-auto">
                 <table class="w-full table-auto">
                     <!--Table head-->
                     <thead class="text-xs uppercase text-gray-400 dark:text-night-100">
                         <tr>
-                            <th class="py-3 text-left"><a (click)="sortBy('emailAddress')"> Email {{sortIcon('emailAddress')}}</a></th>
-                            <th class="py-3 text-left"><a (click)="sortBy('userStatus')">Status {{sortIcon('userStatus')}}</a></th>
-                            <th class="py-3 text-left"><a (click)="sortBy('firstName')">First Name {{sortIcon('firstName')}} </a></th>
-                            <th class="py-3 text-left"><a (click)="sortBy('lastName')">Last Name {{sortIcon('lastName')}} </a></th>
+                            <th class="py-3 text-left"><a (click)="sortBy('emailAddress')"> Email
+                                    {{sortIcon('emailAddress')}}</a></th>
+                            <th class="py-3 text-left"><a (click)="sortBy('userStatus')">Status
+                                    {{sortIcon('userStatus')}}</a></th>
+                            <th class="py-3 text-left"><a (click)="sortBy('firstName')">First Name
+                                    {{sortIcon('firstName')}} </a></th>
+                            <th class="py-3 text-left"><a (click)="sortBy('lastName')">Last Name
+                                    {{sortIcon('lastName')}} </a></th>
                             <th class="py-3 text-right">View</th>
 
                         </tr>
@@ -80,7 +83,21 @@
                     </tbody>
                     <!--end::Table body-->
                 </table>
-                
+                <div class="flex items-center my-2">
+                    <div class="text-xs font-semibold mr-1">Items Per Page:</div>
+                    <div>
+                        <select (change)="onChangePageSize($event)"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg 
+                                focus:ring-blue-500 focus:border-blue-500 block w-full py-0 px-5 dark:bg-gray-700 
+                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option *ngFor="let size of pageSizes" [ngValue]="size"
+                                class="border-b border-dashed border-gray-200 dark:border-night-500 hover:bg-slate-200">
+                                {{ size }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
