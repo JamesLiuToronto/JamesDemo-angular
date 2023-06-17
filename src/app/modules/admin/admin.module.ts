@@ -17,6 +17,8 @@ import { ReferenceComponent } from './reference/reference.component';
 import { ReferenceTypeComponent } from './reference/reference-type/reference-type.component';
 import { PopupWindowComponent } from 'src/app/shared/components/popup-window/popup-window.component';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
+import { PageSizeComponent } from "../../shared/components/page-size/page-size.component";
+import { PageFilterComponent } from "../../shared/components/page-filter/page-filter.component";
 
 
 
@@ -36,9 +38,7 @@ import { PaginationComponent } from 'src/app/shared/components/pagination/pagina
         UsergroupComponent,
         ReferenceComponent,
         ReferenceTypeComponent,
-
-
     ],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(),  PopupWindowComponent, PaginationComponent]
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule, AngularSvgIconModule.forRoot(), PopupWindowComponent, PaginationComponent, PageSizeComponent, PageFilterComponent]
 })
 export class AdminModule {}

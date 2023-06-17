@@ -1,24 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpUtilityService } from 'src/app/shared/service/http-utility.service';
 import { LoadingService } from 'src/app/shared/service/loading.service';
 import { AuthService } from '../../auth/services/auth.service';
-import { User } from '../model/User';
+import { User, UserFilterType } from '../model/User';
 import { UsersService } from '../services/users.service';
 import { PageService } from 'src/app/shared/service/page.service';
-import { Pager } from 'src/app/shared/dto/Pager';
+import { PageFilter, Pager } from 'src/app/shared/dto/Pager';
+import { Subscription } from 'rxjs';
+import { UsersFilterService } from '../services/usersFilter.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   users: User[] = [];
   lastRetrieveTime: Date | undefined;
   loading$ = this.loader.loading$;
   title: string = "Retrieve User List";
+
+  selectedFilter: PageFilter|undefined ;
 
   pageResult: Pager | undefined;
 
@@ -27,27 +31,64 @@ export class UsersComponent implements OnInit {
   paginaition = true;
 
   pageSizes = [2, 5, 10, 20, 50];
-  pageNumber = 0 ;
-  pageSize = this.pageSizes[0] ;
- 
+  pageNumber = 0;
+  pageSize = this.pageSizes[0];
+
+  singleSubscription: Subscription | undefined;
+  pageSubscription: Subscription | undefined;
+  filters: PageFilter[]|undefined ;
+
 
 
   constructor(public loader: LoadingService, private usersService: UsersService,
     private router: Router, private httpUtilityService: HttpUtilityService,
     private authService: AuthService, private _Activatedroute: ActivatedRoute,
-    private pageService: PageService) {
-      
+    private pageService: PageService, private usersFilterService:UsersFilterService) {
+    this.selectedFilter = this.pageService.getInitPageFilter();
+    this.filters = this.usersFilterService.getUserFilters() ;
+
+  }
+  ngOnDestroy(): void {
+    if (!(this.singleSubscription == undefined)) {
+      this.singleSubscription?.unsubscribe();
+    }
+    if (!(this.pageSubscription == undefined)) {
+      this.pageSubscription?.unsubscribe();
+    }
   }
   ngOnInit(): void {
 
     this.pageService.pageChangeEvent
       .subscribe(
         (page: number) => {
-          this.pageNumber = page ;
+          this.pageNumber = page;
           this.getUserList();
-          return ;
+          return;
         }
       );
+
+    this.pageService.pageSizeChangeEvent
+      .subscribe(
+        (size: number) => {
+          this.pageSize = size;
+          this.resetPage();
+          return;
+        }
+      );  
+
+      this.pageService.filterChangeEvent
+      .subscribe(
+        (filter: PageFilter) => {
+
+          console.log("search Type inusers=" + filter.fieldName) ;
+          console.log("search value inusers=" + filter.fieldValue) ;
+          console.log("search from inusers=" + filter.fromValue) ;
+          console.log("search to inusers=" + filter.toValue) ;
+          this.selectedFilter = filter ;
+          this.resetPage();
+          return;
+        }
+      );   
 
     if (this.users.length == 0) {
       this.getUserList();
@@ -59,10 +100,11 @@ export class UsersComponent implements OnInit {
       let type = params['type'];
 
     })
+  }
 
-
-
-
+  resetPage(){
+    this.pageNumber = 0;
+    this.getUsers();
   }
 
   isAdmin() {
@@ -77,16 +119,17 @@ export class UsersComponent implements OnInit {
   getUserList() {
     if (this.isAdmin()) {
       this.getUsers();
+      return;
     }
 
     this.getUserById(this.authService.getLoginedInUserAccount().userId);
   }
 
   getUserById(userAccountId: number) {
-    this.usersService.getUserById(userAccountId)
+    this.singleSubscription = this.usersService.getUserById(userAccountId)
       .subscribe({
         next: u => {
-          this.users.push(u);
+          this.users = [u];
           this.lastRetrieveTime = new Date();
         },
         error: (error) => {
@@ -99,13 +142,13 @@ export class UsersComponent implements OnInit {
   }
 
   private getUsers() {
-    this.usersService.getUserListWithPagenition(this.sortField, this.sortOrder, this.pageNumber, this.pageSize)
+    console.log("filter when retrieve" + this.selectedFilter?.displayName) ;
+    this.pageSubscription = this.usersService.getUserListWithPagenition(this.sortField, this.sortOrder, this.pageNumber, this.pageSize, this.selectedFilter!)
       .subscribe({
         next: u => {
-          this.setPage(u) ;
+          this.setPage(u);
           console.log("this users", this.users);
-          console.log("pageSize =" + this.pageSize);
-          console.log("pageNumber =" + this.pageNumber);
+          
           this.lastRetrieveTime = new Date();
           this.pageService.dataChangeEvent.emit(true);
         },
@@ -118,13 +161,15 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  setPage(u:any){
-    this.users = this.pageService.setPage(u) ;
+  setPage(u: any) {
+    this.users = [];
+    this.users = this.pageService.setPage(u);
+    console.log("setpage=" + JSON.stringify(this.users));
 
   }
 
 
-  
+
   viewUser(index: number) {
     this.usersService.setSelectedUser(this.users[index]);
     this.router.navigateByUrl('/admin/user');
@@ -135,16 +180,10 @@ export class UsersComponent implements OnInit {
 
   }
 
-  onChangePageSize(event: any) {
-
-    this.pageSize = event.target.value ;
-    this.pageNumber = 0 ;
-    this.getUsers() ;
-  }
-
+  
   onChangePage(pageNumber: number) {
-    this.pageNumber = pageNumber ;
-    this.getUsers() ;
+    this.pageNumber = pageNumber;
+    this.getUsers();
   }
 
 
@@ -163,7 +202,10 @@ export class UsersComponent implements OnInit {
     return '';
   }
 
+  isUserFilterUndifined(){
+    return !this.selectedFilter?.active ;
+  }
 
-
+  
 }
 

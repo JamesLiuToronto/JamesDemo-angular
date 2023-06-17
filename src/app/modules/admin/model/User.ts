@@ -8,3 +8,9 @@
     roleList:string;
     provider:string;
 }
+
+export interface UserFilterType {
+    emailAddress?: string;
+    firstName?: string;
+    lastName?: string;
+}

@@ -26,3 +26,14 @@ export interface PageableSort {
     sortField: string;
     sortDesc:boolean;
 }
+
+export interface PageFilter{
+    active:boolean ;
+    fieldName: string;
+    fieldType: string;
+    fieldValue: string;
+    fromValue: number;
+    toValue:number;
+    displayName:string;
+    optionalList:string;
+}
