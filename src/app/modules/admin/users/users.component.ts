@@ -9,6 +9,7 @@ import { PageService } from 'src/app/shared/service/page.service';
 import { PageFilter, Pager } from 'src/app/shared/dto/Pager';
 import { Subscription } from 'rxjs';
 import { UsersFilterService } from '../services/usersFilter.service';
+import { PageFilterService } from 'src/app/shared/service/pageFilter.service';
 
 @Component({
   selector: 'app-users',
@@ -21,6 +22,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   lastRetrieveTime: Date | undefined;
   loading$ = this.loader.loading$;
   title: string = "Retrieve User List";
+
+  pageChangeEventSubscribe:Subscription | undefined;
+  pageSizeChangeEventSubscribe:Subscription | undefined;
+  pageFilterChangeEventSubscribe:Subscription | undefined;
+
 
   selectedFilter: PageFilter|undefined ;
 
@@ -43,8 +49,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(public loader: LoadingService, private usersService: UsersService,
     private router: Router, private httpUtilityService: HttpUtilityService,
     private authService: AuthService, private _Activatedroute: ActivatedRoute,
-    private pageService: PageService, private usersFilterService:UsersFilterService) {
-    this.selectedFilter = this.pageService.getInitPageFilter();
+    private pageService: PageService, private pageFilterService: PageFilterService,
+    private usersFilterService:UsersFilterService) {
+    this.selectedFilter = this.pageFilterService.getInitPageFilter();
     this.filters = this.usersFilterService.getUserFilters() ;
 
   }
@@ -55,10 +62,22 @@ export class UsersComponent implements OnInit, OnDestroy {
     if (!(this.pageSubscription == undefined)) {
       this.pageSubscription?.unsubscribe();
     }
+
+    if (!(this.pageChangeEventSubscribe == undefined)) {
+      this.pageChangeEventSubscribe?.unsubscribe();
+    }
+
+    if (!(this.pageSizeChangeEventSubscribe == undefined)) {
+      this.pageSizeChangeEventSubscribe?.unsubscribe();
+    }
+
+    if (!(this.pageFilterChangeEventSubscribe == undefined)) {
+      this.pageFilterChangeEventSubscribe?.unsubscribe();
+    }
   }
   ngOnInit(): void {
 
-    this.pageService.pageChangeEvent
+    this.pageChangeEventSubscribe = this.pageService.pageChangeEvent
       .subscribe(
         (page: number) => {
           this.pageNumber = page;
@@ -67,7 +86,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.pageService.pageSizeChangeEvent
+      this.pageSizeChangeEventSubscribe = this.pageService.pageSizeChangeEvent
       .subscribe(
         (size: number) => {
           this.pageSize = size;
@@ -76,14 +95,10 @@ export class UsersComponent implements OnInit, OnDestroy {
         }
       );  
 
-      this.pageService.filterChangeEvent
+      this.pageFilterChangeEventSubscribe = this.pageFilterService.filterChangeEvent
       .subscribe(
         (filter: PageFilter) => {
-
-          console.log("search Type inusers=" + filter.fieldName) ;
-          console.log("search value inusers=" + filter.fieldValue) ;
-          console.log("search from inusers=" + filter.fromValue) ;
-          console.log("search to inusers=" + filter.toValue) ;
+         
           this.selectedFilter = filter ;
           this.resetPage();
           return;
@@ -92,11 +107,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     if (this.users.length == 0) {
       this.getUserList();
-      console.log("INIT retrirvr");
     }
 
     this._Activatedroute.data.subscribe(params => {
-      console.log(params);
       let type = params['type'];
 
     })
@@ -136,18 +149,15 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.httpUtilityService.errorHandler("Retrieve User Failed by Id-" + userAccountId, error)
         },
         complete: () => {
-          console.log("loading flag finish=" + this.loading$);
         }
       });
   }
 
   private getUsers() {
-    console.log("filter when retrieve" + this.selectedFilter?.displayName) ;
     this.pageSubscription = this.usersService.getUserListWithPagenition(this.sortField, this.sortOrder, this.pageNumber, this.pageSize, this.selectedFilter!)
       .subscribe({
         next: u => {
           this.setPage(u);
-          console.log("this users", this.users);
           
           this.lastRetrieveTime = new Date();
           this.pageService.dataChangeEvent.emit(true);
@@ -156,7 +166,6 @@ export class UsersComponent implements OnInit, OnDestroy {
           this.httpUtilityService.errorHandler("Retrieve User List Failed", error);
         },
         complete: () => {
-          console.log("loading flag finish=" + this.loading$);
         }
       });
   }
@@ -164,7 +173,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   setPage(u: any) {
     this.users = [];
     this.users = this.pageService.setPage(u);
-    console.log("setpage=" + JSON.stringify(this.users));
 
   }
 

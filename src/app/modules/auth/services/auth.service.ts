@@ -63,7 +63,6 @@ export class AuthService {
   logoutService() {
     this.disableAuthenticated();
     localStorage.removeItem('userId');
-    console.log("logout= " + this.isAuthenticated) ;
 
   }
 

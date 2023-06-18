@@ -35,14 +35,12 @@ export class SignUpComponent implements OnInit {
 
     this.registerationForm.get('acceptTerm')?.valueChanges.
       subscribe(checkedValue => {
-        console.log("term change=" + checkedValue)
         if (checkedValue) {
           this.readySubmit = true;
         }
         else {
           this.readySubmit = false;
         }
-        console.log("ready submit=" + this.readySubmit);
       })
 
   }
@@ -50,14 +48,12 @@ export class SignUpComponent implements OnInit {
   onSubmit(form: FormGroup) {
     this.signupService.signUp(this.map(form))
       .subscribe(u => {
-        console.log("signup successful");
         this.success();
 
       
       
     }, (error) => {
       this.submitErrorHandler(error)
-      console.log("error happened=" + error);
     });
   
 }

@@ -38,9 +38,12 @@ export class UsersService {
   }
 
   getUserListWithPagenition(sortField:string, direction:number, offset:number, pageSize:number, filter:PageFilter ) : Observable<Pager>{
-
-    return this.http.get<Pager>(this.baseUrl + "/api/account/page/" + sortField + "/" + direction + "/" + offset + "/" + pageSize,
-                                { params:this.usersFilterService.getHttpParamsForUserList(filter), headers: this.httpUtility.getHeader()}).pipe(shareReplay());
+    let requestUrl = this.baseUrl + "/api/account/page/" + sortField + "/" + direction + "/" + offset + "/" + pageSize ;
+    console.log("call account service =" + new Date() + " ==" + requestUrl ) ;
+    return this.http.get<Pager>(requestUrl,
+                                { params:this.usersFilterService.getHttpParamsForUserList(filter), 
+                                  headers: this.httpUtility.getHeader()})
+                                  .pipe(shareReplay());
   }
   
 

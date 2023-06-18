@@ -19,7 +19,6 @@ export class ReferenceTypeComponent {
 
     if (this.types.length == 0) {
       this.getTypeList();
-      console.log("INIT retrirvr");
     }
   }
 
@@ -36,7 +35,6 @@ export class ReferenceTypeComponent {
           this.httpUtilityService.errorHandler("Retrieve Reference Type List Failed", error);
         },
         complete: () => {
-          console.log("loading reference type flag finish=");
         }
       });
   }

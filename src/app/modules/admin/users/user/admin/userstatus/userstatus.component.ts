@@ -35,7 +35,6 @@ export class UserstatusComponent implements OnInit {
         error: (error) => {
           this.httpUtilityService.errorHandler(title, error),
           () => {
-            console.log("activate User finish=");
           }
         }
       });
@@ -48,7 +47,6 @@ export class UserstatusComponent implements OnInit {
         this.user = u;
         this.httpUtilityService.openPopWindow("INFO", "Deactivate User Successful", "User status is " + this.user.userStatus);
       }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
-        console.log("deactivate User finish=");
       });
   }
 
@@ -61,7 +59,6 @@ export class UserstatusComponent implements OnInit {
         this.toeknDisplay = true;
         this.httpUtilityService.openPopWindow("INFO", "Activate Token is generated Successful", "token: " + this.token);
       }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
-        console.log("deactivate User finish=");
       });
   }
 

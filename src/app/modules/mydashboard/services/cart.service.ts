@@ -20,9 +20,7 @@ export class CartService {
 
   RemoveFromCart(book :Book){
     this.cart.delete(book.name);
-    console.log('remove ' + book.name) ;
     this.totalBooksInCart = this.cart.size ;
-    console.log("total in Cart=" + this.totalBooksInCart)
   }
 
   IsInCart(name :string){

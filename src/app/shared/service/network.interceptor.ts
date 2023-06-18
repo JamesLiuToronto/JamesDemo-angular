@@ -34,7 +34,6 @@ export class NetworkInterceptor implements HttpInterceptor {
 
         this.requestsCompleted++;
 
-        console.log(this.requestsCompleted, this.totalRequests);
 
         if (this.requestsCompleted === this.totalRequests) {
           this.loader.hide();

@@ -38,7 +38,6 @@ export class UsertokenComponent implements OnInit {
         },
         error: (error) => {
           this.httpUtilityService.errorHandler(title, error), () => {
-            console.log("Reset Password Token finish=");
           }
         }
       });

@@ -1,9 +1,9 @@
 
 import { Component, Input } from '@angular/core';
-import { PageService } from '../../service/page.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { PageFilter } from '../../dto/Pager';
+import { PageFilterService } from '../../service/pageFilter.service';
 
 @Component({
   selector: 'app-page-filter',
@@ -16,12 +16,12 @@ import { PageFilter } from '../../dto/Pager';
 export class PageFilterComponent {
 
   @Input ('filters') filterSelections:PageFilter[] | undefined ;
-  filterField = this.pageService.getInitPageFilter();
+  filterField = this.pageFilterService.getInitPageFilter();
   filterForm!: FormGroup;
   optionalList:string[]|undefined ;
 
-  constructor(private fb: FormBuilder, private pageService: PageService){
-    this.filterSelections?.push(this.pageService.getInitPageFilter()) ;
+  constructor(private fb: FormBuilder, private pageFilterService: PageFilterService){
+    this.filterSelections?.push(this.pageFilterService.getInitPageFilter()) ;
     
   }
   
@@ -38,8 +38,7 @@ export class PageFilterComponent {
 
   public onChangeFilterField(event: any) {
     let selectedFilterName = event.target.value;
-    this.filterField = this.pageService.getFilterByName(selectedFilterName, this.filterSelections!);
-    console.log("filter change=" + this.filterField.displayName) ;
+    this.filterField = this.pageFilterService.getFilterByName(selectedFilterName, this.filterSelections!);
   }
 
   public onSelectedStatus(event: any) {
@@ -48,7 +47,6 @@ export class PageFilterComponent {
 
     
   public getFilterType(){
-    console.log("filter type get=" + this.filterField.displayName) ;
   
     if (this.filterField.fieldName=='NA'){
       return 'NA' ;
@@ -57,12 +55,7 @@ export class PageFilterComponent {
   }
 
   onSubmit(form: FormGroup) {
-    //this.filterField.fieldValue = form.get('filterString')?.value ;
-    // console.log("filter string=" + form.get('filterString')?.value) ;
-    // console.log("filter boolean=" + form.get('filterBoolean')?.value) ;
-    // console.log("filter from=" + form.get('filterFrom')?.value) ;
-    // console.log("filter to=" + form.get('filterTo')?.value) ;
-
+   
     if (!this.isFilterEnable()){
       return ;
     }
@@ -79,7 +72,7 @@ export class PageFilterComponent {
       this.filterField.toValue = form.get('filterTo')?.value;
     }
 
-    this.pageService.filterChangeEvent.emit(this.filterField!);
+    this.pageFilterService.filterChangeEvent.emit(this.filterField!);
   
   }
 

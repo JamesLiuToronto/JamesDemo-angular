@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams} from '@angular/common/http';
-import { PageFilter, Pager } from 'src/app/shared/dto/Pager';
-import { PageService } from 'src/app/shared/service/page.service';
+import { PageFilter } from 'src/app/shared/dto/Pager';
+import { PageFilterService } from 'src/app/shared/service/pageFilter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +11,12 @@ export class UsersFilterService {
   
   filters:PageFilter[]|undefined ;
 
-  constructor( private pageService:PageService) {
+  constructor( private pageFilterService:PageFilterService) {
    
   }
   
   public getHttpParamsForUserList(filter:PageFilter): HttpParams {
     let filterString = JSON.stringify(filter);
-    console.log("filter before http=" + filterString);
     let httpParams = new HttpParams();
     httpParams = httpParams.append("filterJsonString", filterString );
     return httpParams;
@@ -26,7 +25,7 @@ export class UsersFilterService {
   getUserFilters(){
 
     this.filters = [] ;
-    this.filters.push(this.pageService.getInitPageFilter()) ;
+    this.filters.push(this.pageFilterService.getInitPageFilter()) ;
 
     this.filters.push({ 
       active:true,

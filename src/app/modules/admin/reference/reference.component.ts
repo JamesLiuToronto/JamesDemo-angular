@@ -47,15 +47,14 @@ export class ReferenceComponent {
       .subscribe({
         next: u => {
           this.references = u;
-          console.log("this References", this.references);
-          console.log("loading flag =" + this.loading$);
+         
           this.lastRetrieveTime = new Date();
         },
         error: (error) => {
           this.httpUtilityService.errorHandler("Retrieve Reference List Failed", error);
         },
         complete: () => {
-          console.log("loading flag finish=" + this.loading$);
+          
         }
       });
   }

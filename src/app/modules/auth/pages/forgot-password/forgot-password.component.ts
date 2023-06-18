@@ -29,7 +29,6 @@ export class ForgotPasswordComponent implements OnInit {
         let token = result.note;
         this.httpUtilityService.openPopWindow("INFO", "Reset Password Token is generated Successful", "token: " + token);
       }, (error) => this.httpUtilityService.errorHandler(title, error), () => {
-        console.log("Reset Password Token finish=");
       });
   }
 

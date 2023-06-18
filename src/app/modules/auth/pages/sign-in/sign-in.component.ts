@@ -46,7 +46,6 @@ export class SignInComponent implements OnInit {
       
     }, (error: ErrorDTO) => {
       this.errorHandler(this.title,error) ;
-      console.log("error happened2=" + JSON.stringify(error)) ;
     });
   }
 
@@ -76,7 +75,6 @@ export class SignInComponent implements OnInit {
       
     }, (error: ErrorDTO) => {
       this.errorHandler(this.title,error) ;
-      console.log("error happened2=" + JSON.stringify(error)) ;
     });
   }
 
